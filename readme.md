@@ -16,6 +16,7 @@ Advanced Custom Fields Pro 5.6 or greater has to be installed and activated.
 * Install and activate Advanced Custom Fields Pro 5.6 or greater. 
 * Activate the plugin. 
 * Export and Import will show on your flexible fields.
+* You can rename / delete your templates in admin > ACF Templates (edit templates on the road...)
 
 ### 2017-12-23
 * Initial Commit
