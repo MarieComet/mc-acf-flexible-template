@@ -86,7 +86,6 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                 }
 
                 echo '</select>';
-                echo '<input id="import-template" class="acf-button button button-secondary" type="submit" value="'. __('Import', 'mc-acf-ft-template').'">';
             } else {
                 echo '<p>'. __('No template found', 'mc-acf-ft-template').'</p>';
             }

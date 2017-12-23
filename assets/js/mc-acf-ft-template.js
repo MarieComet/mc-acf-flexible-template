@@ -15,18 +15,10 @@ jQuery(document).ready(function($){
 
     var MC_ACF_Flexible_Template = acf.ajax.extend({
         events: {
-            'click .mc-acf-ft-open-import' : '_open_wrap',
             'change .acf-templates-select' : '_import_template',
             'click .acf-mc-ft-save' : '_save_template',
         },
 
-        _open_wrap : function(e) {
-            e.preventDefault();
-            var parentFlex = e.$el.closest('.acf-field-flexible-content');
-            var childWrap = parentFlex.find('.acf-mc-import-content');
-            console.log(childWrap);
-            //$(childWrap).show();
-        },
         // Import template
         _import_template : function(e) {
             e.preventDefault();
