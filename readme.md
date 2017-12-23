@@ -1,4 +1,4 @@
-# MC ACF Export Layout
+# MC ACF Flexible Template
 
 ## Description 
 

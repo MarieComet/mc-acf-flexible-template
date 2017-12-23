@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: MC ACF Flexible Templates
- * Plugin URI: https://github.com/MarieComet/MC-ACF-Export-Layout
+ * Plugin Name: MC ACF Flexible Template
+ * Plugin URI: https://github.com/MarieComet/MC-ACF-Flexible-Template
  * Description: This WordPress plugin makes it possible to save the ACF flexible content fields as templates and to use them again. This plugin is under development, please do not use it in production site.
  * Author: Marie Comet
  * Author URI: https://www.mariecomet.fr
