@@ -63,8 +63,17 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             );
 
             $acf_templates = get_posts( $args_templates );
+            echo '<div class="acf-mc-import-wrap postbox closed">';
 
+            echo '<button type="button" class="handlediv mc-acf-ft-open-import" aria-expanded="false">
+            <span class="screen-reader-text">'.__('Import template', 'mc-acf-ft-template').'</span>
+            <span class="toggle-indicator" aria-hidden="true"></span>
+            </button>';
+            echo '<h3 class="">'.__('Import template', 'mc-acf-ft-template').'</h3>';
+            
+            echo '<div class="acf-mc-import-content inside">';
             if( $acf_templates ) {
+                
                 echo '<div class="acf-mc-ft-import-success acf-success-message" style="display:none;"></div>';
                 echo '<div class="acf-mc-ft-import-error acf-error-message" style="display:none;"></div>';
                 echo '<label for="acf_templates">'. __('Import template', 'mc-acf-ft-template').'</label>';
@@ -81,6 +90,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             } else {
                 echo '<p>'. __('No template found', 'mc-acf-ft-template').'</p>';
             }
+            echo '</div>'; // content
+            echo '</div>'; // wrap
         }
 
         /*

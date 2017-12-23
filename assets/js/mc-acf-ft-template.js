@@ -15,11 +15,18 @@ jQuery(document).ready(function($){
 
     var MC_ACF_Flexible_Template = acf.ajax.extend({
         events: {
-
+            'click .mc-acf-ft-open-import' : '_open_wrap',
             'change .acf-templates-select' : '_import_template',
             'click .acf-mc-ft-save' : '_save_template',
         },
 
+        _open_wrap : function(e) {
+            e.preventDefault();
+            var parentFlex = e.$el.closest('.acf-field-flexible-content');
+            var childWrap = parentFlex.find('.acf-mc-import-content');
+            console.log(childWrap);
+            //$(childWrap).show();
+        },
         // Import template
         _import_template : function(e) {
             e.preventDefault();
@@ -30,6 +37,9 @@ jQuery(document).ready(function($){
             var parentValues = parentFlex.find('.values');
 
             var numberLayouts = parentValues.find('.layout').length;
+
+            var error_div = parentFlex.find('.acf-mc-ft-import-error');
+            var succes_div = parentFlex.find('.acf-mc-ft-import-success');
 
             $form = $('form#post');
             
@@ -58,8 +68,8 @@ jQuery(document).ready(function($){
                 console.log(json);
                     if(true === json.success) {
                         
-                        $('.acf-mc-ft-import-error').hide();
-                        $('.acf-mc-ft-import-success').text( json.data.message ).show();
+                        $(error_div).hide();
+                        $(succes_div).text( json.data.message ).show();
                         var layoutsHtml =  $(json.data.layouts);
                         // loop on layouts
                         $.each(layoutsHtml, function(key, value) {
@@ -76,14 +86,14 @@ jQuery(document).ready(function($){
                         });
 
                         setTimeout(function(){
-                            $('.acf-mc-ft-import-success').text( '' ).hide();
+                            $(succes_div).text( '' ).hide();
                             //$(parentValues).find('.layout').removeClass('bg-green');
                         }, 3000);
 
                     } else {
                         //console.log(json.data.message);
-                        $('.acf-mc-ft-import-success').hide();
-                        $('.acf-mc-ft-import-error').text( json.data.message ).show();
+                        $(succes_div).hide();
+                        $(error_div).text( json.data.message ).show();
                     }
 
                     // unlock so WP can publish form
@@ -107,6 +117,9 @@ jQuery(document).ready(function($){
             var parentValues = parentFlex.find('.values');
 
             var template_name = parentFlex.find('.acf-mc-ft-template-name').val();
+
+            var error_div = parentFlex.find('.acf-mc-ft-save-error');
+            var succes_div = parentFlex.find('.acf-mc-ft-save-success');
             
             $form = $('form#post');
 
@@ -143,15 +156,15 @@ jQuery(document).ready(function($){
                 // bail early if not json success
                     //console.log(json);
                     if(true === json.success) {
-                        $('.acf-mc-ft-save-error').hide();
-                        $('.acf-mc-ft-save-success').text( json.data.message ).show();
+                        $(error_div).hide();
+                        $(succes_div).text( json.data.message ).show();
                         setTimeout(function(){
-                            $('.acf-mc-ft-save-success').text( '' ).hide();
+                            $(succes_div).text( '' ).hide();
                         }, 3000);
                     } else {
                         //console.log(json.data.message);
-                        $('.acf-mc-ft-save-success').hide();
-                        $('.acf-mc-ft-save-error').text( json.data.message ).show();
+                        $(succes_div).hide();
+                        $(error_div).text( json.data.message ).show();
                     }
 
                     // unlock so WP can publish form

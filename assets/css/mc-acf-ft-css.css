@@ -1,6 +1,12 @@
+
 .acf-mc-ft-save-wrap {
     margin: 1.2em 0;
 }
+.acf-mc-ft-save-wrap h3 {
+    text-align: right;
+    font-weight: normal;
+}
+
 .acf-mc-ft-save-wrap input[type="text"].acf-mc-ft-template-name {
     width: auto;
     vertical-align: middle;
