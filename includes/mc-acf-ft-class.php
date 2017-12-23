@@ -5,13 +5,12 @@
 defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 
 
-
 if( !class_exists('MC_Acf_Fexlible_Template') ) {
     class MC_Acf_Fexlible_Template {
         
         public function __construct() {
 
-            add_filter('acf/get_field_label', array($this, 'mc_ft_add_filter_label'), 1000, 2);
+            add_filter('acf/get_field_label', array($this, 'mc_ft_add_filter_label'), 10, 2);
             // ajax action for loading values
             add_action('wp_ajax_mc_acf_ft_save_template', array($this, 'mc_acf_ft_save_template'));
             add_action('wp_ajax_mc_acf_import_template', array($this, 'mc_acf_import_template'));
@@ -54,10 +53,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         */
         public function mc_ft_get_templates($field_key){
 
-            // global
-            global $post, $pagenow, $typenow;
-
-            $args = array(
+            $args_templates = array(
                 'post_type' => 'acf_template',
                 'posts_per_page' => -1,
                 'post_status' => 'publish',
@@ -66,24 +62,22 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                 'meta_compare' => '='
             );
 
-            $acf_templates = new WP_Query( $args );
+            $acf_templates = get_posts( $args_templates );
 
-            if( $acf_templates->have_posts() ) {
+            if( $acf_templates ) {
                 echo '<div class="acf-mc-ft-import-success acf-success-message" style="display:none;"></div>';
                 echo '<div class="acf-mc-ft-import-error acf-error-message" style="display:none;"></div>';
                 echo '<label for="acf_templates">'. __('Import template', 'mc-acf-ft-template').'</label>';
                 echo '<select name="acf_templates" class="acf-templates-select">';
                 echo '<option value="0">--</option>';
 
-                while( $acf_templates->have_posts() ) {
-                    $acf_templates->the_post();
-                    echo '<option value="'.get_the_ID().'">'.get_the_title().'</option>';
+                foreach( $acf_templates as $acf_template ) {
+
+                    echo '<option value="'.$acf_template->ID.'">'.$acf_template->post_title.'</option>';
                 }
 
                 echo '</select>';
                 echo '<input id="import-template" class="acf-button button button-secondary" type="submit" value="'. __('Import', 'mc-acf-ft-template').'">';
-                wp_reset_postdata();
-
             } else {
                 echo '<p>'. __('No template found', 'mc-acf-ft-template').'</p>';
             }
