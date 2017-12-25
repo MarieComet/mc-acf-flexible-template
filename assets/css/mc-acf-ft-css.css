@@ -7,10 +7,10 @@
     font-weight: normal;
 }
 
-.acf-mc-ft-save-wrap input[type="text"].acf-mc-ft-template-name {
+.acf-mc-ft-save-wrap input[type="text"].acf-mc-ft-template-name, .acf-mc-import-content.inside select.acf-templates-select {
     width: auto;
     vertical-align: middle;
-    margin: 0 0.5em;
+    margin-right: 0.5em;
 }
 .acf-mc-ft-save-success.acf-success-message, .acf-mc-ft-import-success.acf-success-message {
     border: 1px solid #46b450;
