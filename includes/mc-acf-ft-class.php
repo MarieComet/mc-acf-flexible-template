@@ -14,7 +14,6 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             // ajax action for loading values
             add_action('wp_ajax_mc_acf_ft_save_template', array($this, 'mc_acf_ft_save_template'));
             add_action('wp_ajax_mc_acf_import_template', array($this, 'mc_acf_import_template'));
-            //add_action('acf/save_post',array($this, 'test'));
 
             // enqueue js extension for acf
             // do this when ACF in enqueuing scripts
@@ -22,9 +21,6 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
         }
 
-        public function test($post) {
-            error_log(print_r($_POST, true));
-        }
         /*
         *  mc_ft_add_filter_label
         *  hooked on acf_get_field_label
@@ -69,7 +65,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             <span class="screen-reader-text">'.__('Import template', 'mc-acf-ft-template').'</span>
             <span class="toggle-indicator" aria-hidden="true"></span>
             </button>';
-            echo '<h3 class="">'.__('Import template', 'mc-acf-ft-template').'</h3>';
+            echo '<h3 class="">'.__('Import and export templates', 'mc-acf-ft-template').'</h3>';
             
             echo '<div class="acf-mc-import-content inside">';
             if( $acf_templates ) {
@@ -89,7 +85,14 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             } else {
                 echo '<p>'. __('No template found', 'mc-acf-ft-template').'</p>';
             }
-            echo '</div>'; // content
+            echo '<div class="acf-mc-ft-save-wrap">';
+                echo '<div class="acf-mc-ft-save-success acf-success-message" style="display:none;"></div>';
+                echo '<div class="acf-mc-ft-save-error acf-error-message" style="display:none;"></div>';
+                echo '<div class="acf-mc-ft-input"><label for="mc_acf_template_name">'. __('Save as template :', 'mc-acf-ft-template').'</label>';
+                echo '<input type="text" class="acf-mc-ft-template-name" value="" name="mc_acf_template_name">';
+                echo '<a href="#" class="acf-mc-ft-save acf-button button button-secondary">Save</a>';
+                echo '</div></div>';
+            echo '</div>'; // content inside
             echo '</div>'; // wrap
         }
 
@@ -154,9 +157,12 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                 
                 $fields = $_POST['acf'][$parent_key];
 
-                if( !empty($fields) && is_array($fields) ) { 
-                    $flex_layouts = maybe_serialize( $fields );
+                if( !empty($fields) && is_array($fields) ) {
 
+                    if( !is_serialized($fields) ) {
+                        $fields = maybe_serialize( $fields );
+                    }
+                    error_log(print_r($fields, true));
                     // if we have some flexibles fields, save them in a CPT
                     $post_arr = array(
                         'post_title'   =>  $template_name,
@@ -166,7 +172,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                         'post_type' => 'acf_template',
                         'meta_input'   => array(
                             '_flex_layout_parent' => $parent_key,
-                            '_flex_layout_data' => $flex_layouts,
+                            '_flex_layout_data' => $fields,
 
                         ),
                     );
@@ -179,6 +185,14 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                         wp_send_json_error($error);
                         exit;
                     } else {
+                        if ( ! add_post_meta( $post_id, '_flex_layout_parent', $parent_key, true ) ) { 
+                           update_post_meta( $post_id, '_flex_layout_parent', $parent_key );
+                        }
+
+                        if ( ! add_post_meta( $post_id, '_flex_layout_data', $fields, true ) ) { 
+                           update_post_meta( $post_id, '_flex_layout_data', $fields );
+                        }
+
                         $json['message'] = __('Template saved, remember to save the post.', 'mc-acf-ft-template');
                     }
 
@@ -251,13 +265,14 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
                 // the flexible layout meta data saved in the template
                 $layouts_serialized = get_post_meta($flex_layout_id, '_flex_layout_data', true );
-
+                
                 $layouts = maybe_unserialize($layouts_serialized);
 
                 if( is_array($layouts) && !empty($layouts) ) {
 
                     // the original ACF field group from which template was saved
                     $layout_parent_key = get_post_meta($flex_layout_id, '_flex_layout_parent', true );
+
                     // get the original field object 
                     // needed in the render_layout function
                     $parent_object = get_field_object($layout_parent_key, true, true);
@@ -293,6 +308,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                     // loop on parent object values, now contain our templates values
 
                     foreach( $parent_object['value'] as $i => $value ):
+                        //error_log(print_r($value, true));
                         ob_start();
                         // render LAYOUT
                         $acf_flex_class->render_layout( $parent_object, $fake_layouts[ $value['acf_fc_layout'] ], $initial_count, $value );

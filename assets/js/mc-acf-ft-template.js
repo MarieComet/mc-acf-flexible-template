@@ -3,7 +3,7 @@ jQuery(document).ready(function($){
     // make sure acf is loaded, it should be, but just in case
     if (typeof acf == 'undefined') { return; }
     // add button for save templates
-    var button = '<div class="acf-mc-ft-save-wrap">';
+    /*var button = '<div class="acf-mc-ft-save-wrap">';
         button += '<div class="acf-mc-ft-save-success acf-success-message" style="display:none;"></div>';
         button += '<div class="acf-mc-ft-save-error acf-error-message" style="display:none;"></div>';
         button += '<div class="acf-mc-ft-input"><label for="mc_acf_template_name">'+mc_acf_ft.ft_label+'</label>';
@@ -11,7 +11,9 @@ jQuery(document).ready(function($){
         button += '<a href="#" class="acf-mc-ft-save acf-button button button-secondary">Save</a>';
         button += '</div></div>';
 
-    $('.acf-field-flexible-content .values').next().append( button );
+    $('.acf-field-flexible-content .values').each(function(index) {
+        $(this).next().append( button );
+    });*/
 
     var MC_ACF_Flexible_Template = acf.ajax.extend({
         events: {
@@ -144,9 +146,7 @@ jQuery(document).ready(function($){
                 dataType: 'json',
                 action: 'mc_acf_ft_save_template',
                 success: function( json ) {
-                console.log(data);
-                // bail early if not json success
-                    //console.log(json);
+
                     if(true === json.success) {
                         $(error_div).hide();
                         $(succes_div).text( json.data.message ).show();
