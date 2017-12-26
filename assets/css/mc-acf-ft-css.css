@@ -1,4 +1,19 @@
-
+.acf-mc-import-wrap {
+    text-align: right;
+}
+.acf-mc-import-content.popup {
+    display: none;
+    padding: 1em;
+    right: 0;
+    text-align: left;
+}
+.acf-field .acf-mc-import-content > label {
+    margin-bottom: 1.5em;
+}
+button.handlediv.acf-mc-ft-close {
+    width: 15px;
+    height: 15px;
+}
 .acf-mc-ft-save-wrap {
     margin: 1.2em 0;
 }

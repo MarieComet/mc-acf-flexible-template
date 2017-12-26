@@ -7,10 +7,15 @@ defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 
 if( !class_exists('MC_Acf_Fexlible_Template') ) {
     class MC_Acf_Fexlible_Template {
-        
-        public function __construct() {
 
-            add_filter('acf/get_field_label', array($this, 'mc_ft_add_filter_label'), 10, 2);
+        function __construct() {
+            if( is_admin() ) {
+                add_action('init', array($this, 'mc_ft_add_actions_filters') );
+            }
+        }
+        public function mc_ft_add_actions_filters() {
+
+            add_filter('acf/get_field_label', array($this, 'mc_ft_add_filter_label'), 999, 2);
             // ajax action for loading values
             add_action('wp_ajax_mc_acf_ft_save_template', array($this, 'mc_acf_ft_save_template'));
             add_action('wp_ajax_mc_acf_import_template', array($this, 'mc_acf_import_template'));
@@ -24,16 +29,16 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         /*
         *  mc_ft_add_filter_label
         *  hooked on acf_get_field_label
-        *  Display the select box for import templates
+        *  Display the select box for import and export templates
         *  @param   $field (array)
         *  @return  $label (string)
         */
         public function mc_ft_add_filter_label($label, $field){
-            global $post;
+            global $post, $pagenow, $typenow;
 
             if( isset($field['type']) 
                 && $field['type'] == 'flexible_content' 
-                && $post->post_type != 'acf-field-group'
+                && !in_array($typenow, array('acf-field-group', 'attachment'))
                 && isset($field['key'])
                 && !empty($field['key'])) {
                 $label .= $this->mc_ft_get_templates($field['key']);
@@ -59,20 +64,20 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             );
 
             $acf_templates = get_posts( $args_templates );
-            echo '<div class="acf-mc-import-wrap postbox closed">';
 
-            echo '<button type="button" class="handlediv mc-acf-ft-open-import" aria-expanded="false">
-            <span class="screen-reader-text">'.__('Import template', 'mc-acf-ft-template').'</span>
-            <span class="toggle-indicator" aria-hidden="true"></span>
+            echo '<div class="acf-mc-import-wrap">';
+
+            echo '<button type="button" class="button button-secondary mc-acf-ft-open-import">
+            '.__('Import / save template', 'mc-acf-ft-template').'
             </button>';
-            echo '<h3 class="">'.__('Import and export templates', 'mc-acf-ft-template').'</h3>';
             
-            echo '<div class="acf-mc-import-content inside">';
+            echo '<div class="acf-mc-import-content popup acf-fc-popup -bottom">';
+            echo '<button type="button" class="handlediv acf-mc-ft-close"><span class="dashicons dashicons-no-alt"><span class="screen-reader-text">'. __('Close import export modal.', 'mc-acf-ft-template').'</span></span></button>';
+            echo '<label for="acf_templates">'. __('Import template', 'mc-acf-ft-template').'</label>';
             if( $acf_templates ) {
                 
                 echo '<div class="acf-mc-ft-import-success acf-success-message" style="display:none;"></div>';
                 echo '<div class="acf-mc-ft-import-error acf-error-message" style="display:none;"></div>';
-                echo '<label for="acf_templates">'. __('Import template', 'mc-acf-ft-template').'</label>';
                 echo '<select name="acf_templates" class="acf-templates-select">';
                 echo '<option value="0">--</option>';
 
@@ -83,14 +88,14 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
                 echo '</select>';
             } else {
-                echo '<p>'. __('No template found', 'mc-acf-ft-template').'</p>';
+                echo '<p>'. __('No template found for this flexible', 'mc-acf-ft-template').'</p>';
             }
             echo '<div class="acf-mc-ft-save-wrap">';
                 echo '<div class="acf-mc-ft-save-success acf-success-message" style="display:none;"></div>';
                 echo '<div class="acf-mc-ft-save-error acf-error-message" style="display:none;"></div>';
-                echo '<div class="acf-mc-ft-input"><label for="mc_acf_template_name">'. __('Save as template :', 'mc-acf-ft-template').'</label>';
+                echo '<div class="acf-mc-ft-input"><label for="mc_acf_template_name">'. __('Save template :', 'mc-acf-ft-template').'</label>';
                 echo '<input type="text" class="acf-mc-ft-template-name" value="" name="mc_acf_template_name">';
-                echo '<a href="#" class="acf-mc-ft-save acf-button button button-secondary">Save</a>';
+                echo '<button class="acf-mc-ft-save acf-button button button-secondary">'. __('Save', 'mc-acf-ft-template').'</button>';
                 echo '</div></div>';
             echo '</div>'; // content inside
             echo '</div>'; // wrap
@@ -162,7 +167,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                     if( !is_serialized($fields) ) {
                         $fields = maybe_serialize( $fields );
                     }
-                    error_log(print_r($fields, true));
+
                     // if we have some flexibles fields, save them in a CPT
                     $post_arr = array(
                         'post_title'   =>  $template_name,
@@ -265,7 +270,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
                 // the flexible layout meta data saved in the template
                 $layouts_serialized = get_post_meta($flex_layout_id, '_flex_layout_data', true );
-                
+
                 $layouts = maybe_unserialize($layouts_serialized);
 
                 if( is_array($layouts) && !empty($layouts) ) {
@@ -334,6 +339,13 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         public function enqueue_script() {
 
             global $post;
+
+            global $post;
+            if (!$post ||
+                !isset($post->ID) || 
+                get_post_type($post->ID) === 'acf-field-group') {
+                return;
+            }
 
             // the handle should be changed to your own unique handle
             $handle = 'mc-acf-ft-template-js';

@@ -16,15 +16,46 @@ jQuery(document).ready(function($){
     });*/
 
     var MC_ACF_Flexible_Template = acf.ajax.extend({
+
         events: {
+            'click button.mc-acf-ft-open-import' : '_open_popup',
+            'click button.acf-mc-ft-close' : '_close_popup',
             'change .acf-templates-select' : '_import_template',
             'click .acf-mc-ft-save' : '_save_template',
         },
 
+        _open_popup : function(e) {
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            // vars
+            var parentFlex = e.$el.closest('.acf-field-flexible-content');
+
+            var popup = $( parentFlex.find('.acf-mc-import-content.popup') );
+
+            if(popup.length) {
+                $(popup).show();
+                $(popup).addClass('-open');
+            }
+        },
+
+        _close_popup : function(e) {
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            // vars
+            var parentFlex = e.$el.closest('.acf-field-flexible-content');
+
+            var popup = $( parentFlex.find('.acf-mc-import-content.popup') );
+
+            if(popup.length) {
+                $(popup).hide();
+                $(popup).addClass('-close');
+            }
+        },
         // Import template
         _import_template : function(e) {
             e.preventDefault();
-            console.log('clicked');
 
             var parentFlex = e.$el.closest('.acf-field-flexible-content');
 
@@ -44,6 +75,7 @@ jQuery(document).ready(function($){
                 acf_templates   : selectedTemplate,
                 number_layout : numberLayouts
             };
+
             data = acf.prepare_for_ajax(data);
 
             // set busy
@@ -59,7 +91,7 @@ jQuery(document).ready(function($){
                 dataType: 'json',
                 action: 'mc_acf_import_template',
                 success: function( json ) {
-                console.log(json);
+
                     if(true === json.success) {
                         
                         $(error_div).hide();
@@ -82,7 +114,7 @@ jQuery(document).ready(function($){
                         setTimeout(function(){
                             $(succes_div).text( '' ).hide();
                             //$(parentValues).find('.layout').removeClass('bg-green');
-                        }, 3000);
+                        }, 5000);
 
                     } else {
                         //console.log(json.data.message);
@@ -152,7 +184,7 @@ jQuery(document).ready(function($){
                         $(succes_div).text( json.data.message ).show();
                         setTimeout(function(){
                             $(succes_div).text( '' ).hide();
-                        }, 3000);
+                        }, 5000);
                     } else {
                         //console.log(json.data.message);
                         $(succes_div).hide();
