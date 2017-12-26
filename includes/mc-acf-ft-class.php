@@ -27,7 +27,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             add_action('acf/input/admin_enqueue_scripts', array($this, 'enqueue_script'));
 
         }
-        
+
         /*
         * mc_ft_acf_field_groupos_add_settings
         * hooked on acf/render_field_settings
@@ -61,7 +61,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                 && !in_array($typenow, array('acf-field-group', 'attachment'))
                 && isset($field['key'])
                 && !empty($field['key'])) {
-                error_log(print_r($field, true));
+
                 $label .= $this->mc_ft_get_templates($field['key']);
             }
 
