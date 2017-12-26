@@ -20,6 +20,13 @@ Advanced Custom Fields Pro 5.6 or greater has to be installed and activated.
 * You can rename / delete your templates in admin > ACF Templates (edit templates on the road...).
 * See screenshots.
 
+## Screenshots
+
+![Field setting](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screen-1.png "Field setting")
+![Subscriber List](https://ps.w.org/wpcasa-mail-alert/assets/screenshot-2.png "Subscriber List")
+![General options](https://ps.w.org/wpcasa-mail-alert/assets/screenshot-3.png "General options")
+![E-mail Options](https://ps.w.org/wpcasa-mail-alert/assets/screenshot-1.png "E-mail Options")
+
 ### 2017-12-23
 * Initial Commit
 
