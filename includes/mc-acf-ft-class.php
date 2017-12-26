@@ -15,6 +15,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         }
         public function mc_ft_add_actions_filters() {
 
+            add_action('acf/render_field_settings/type=flexible_content', array($this, 'mc_ft_acf_field_groups_add_settings'), 10, 1);
+
             add_filter('acf/get_field_label', array($this, 'mc_ft_add_filter_label'), 999, 2);
             // ajax action for loading values
             add_action('wp_ajax_mc_acf_ft_save_template', array($this, 'mc_acf_ft_save_template'));
@@ -25,7 +27,24 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             add_action('acf/input/admin_enqueue_scripts', array($this, 'enqueue_script'));
 
         }
-
+        
+        /*
+        * mc_ft_acf_field_groupos_add_settings
+        * hooked on acf/render_field_settings
+        * Add an option to flexible field to turn on/off import and export function by field
+        * @param  $field (array)
+        */
+        public function mc_ft_acf_field_groups_add_settings($field) {
+            // min
+            acf_render_field_setting( $field, array(
+                'label'         => __('Available for export and import templates.','mc-acf-ft-template'),
+                'instructions'  => __('This flexible field should display import/export functionnality ?', 'mc-acf-ft-template'),
+                'type'          => 'true_false',
+                'name'          => 'mc_acf_ft_true_false',
+                'ui'            => 1,
+                'default_value' => true,
+            ));
+        }
         /*
         *  mc_ft_add_filter_label
         *  hooked on acf_get_field_label
@@ -35,12 +54,14 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         */
         public function mc_ft_add_filter_label($label, $field){
             global $post, $pagenow, $typenow;
-
+            
             if( isset($field['type']) 
                 && $field['type'] == 'flexible_content' 
+                && isset($field['mc_acf_ft_true_false']) && $field['mc_acf_ft_true_false']
                 && !in_array($typenow, array('acf-field-group', 'attachment'))
                 && isset($field['key'])
                 && !empty($field['key'])) {
+                error_log(print_r($field, true));
                 $label .= $this->mc_ft_get_templates($field['key']);
             }
 

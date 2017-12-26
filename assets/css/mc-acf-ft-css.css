@@ -35,7 +35,7 @@ button.handlediv.acf-mc-ft-close {
     display: inline-block;
 }
 .acf-flexible-content .layout.just-added.bg-green {
-    -webkit-box-shadow: 0px 0px 12px 1px rgba(70,180,79,0.30);
-    -moz-box-shadow: 0px 0px 12px 1px rgba(70,180,79,0.30);
-    box-shadow: 0px 0px 12px 1px rgba(70,180,79,0.30);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(27, 193, 41, 0.55)
+    -moz-box-shadow: 0px 0px 5px 0px rgba(27, 193, 41, 0.55)
+    box-shadow: 0px 0px 5px 0px rgba(27, 193, 41, 0.55)
 }
