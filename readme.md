@@ -22,10 +22,17 @@ Advanced Custom Fields Pro 5.6 or greater has to be installed and activated.
 
 ## Screenshots
 
+* Flexible field setting
 ![Field setting](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screen-1.png "Field setting")
-![Subscriber List](https://ps.w.org/wpcasa-mail-alert/assets/screenshot-2.png "Subscriber List")
-![General options](https://ps.w.org/wpcasa-mail-alert/assets/screenshot-3.png "General options")
-![E-mail Options](https://ps.w.org/wpcasa-mail-alert/assets/screenshot-1.png "E-mail Options")
+
+* Save flexible layouts as template
+![Save template](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screen-2.png "Save template")
+
+* Import flexible template
+![Import template](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screen-3.png "Import template")
+
+* Flexible template imported
+![Template imported](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screen-4.png "Template imported")
 
 ### 2017-12-23
 * Initial Commit
