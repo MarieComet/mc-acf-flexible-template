@@ -46,7 +46,7 @@ function mc_acf_ft_register_cpt() {
         'show_ui'               => true,
         'show_in_menu'          => true,
         'menu_position'         => 80,
-        'menu_icon'             => 'dashicons-media-document',
+        'menu_icon'             => 'dashicons-layout',
         'show_in_admin_bar'     => false,
         'show_in_nav_menus'     => false,
         'can_export'            => true,
