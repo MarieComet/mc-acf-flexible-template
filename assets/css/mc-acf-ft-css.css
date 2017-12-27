@@ -1,18 +1,29 @@
-.acf-mc-import-wrap {
+.acf-mc-ft-wrap {
     text-align: right;
 }
-.acf-mc-import-content.popup {
+.acf-mc-ft-wrap .popup {
     display: none;
-    padding: 1em;
+    padding: 1.5em;
     right: 0;
     text-align: left;
+    font-weight: normal;
+    min-width: 350px;
 }
-.acf-field .acf-mc-import-content > label {
-    margin-bottom: 1.5em;
+.acf-field .acf-mc-ft-wrap .popup label {
+    margin-bottom: .5em;
+}
+button.mc-open {
+    font-weight: normal;
 }
 button.handlediv.acf-mc-ft-close {
     width: 15px;
     height: 15px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+button.handlediv.acf-mc-ft-close:hover {
+    color: #fff;
 }
 .acf-mc-ft-save-wrap {
     margin: 1.2em 0;
@@ -21,18 +32,18 @@ button.handlediv.acf-mc-ft-close {
     text-align: right;
     font-weight: normal;
 }
-
-.acf-mc-ft-save-wrap input[type="text"].acf-mc-ft-template-name, .acf-mc-import-content.inside select.acf-templates-select {
+.acf-mc-ft-save-wrap input[type="text"].acf-mc-ft-template-name, .acf-mc-import-content select.acf-templates-select {
     width: auto;
-    vertical-align: middle;
+    vertical-align: bottom;
     margin-right: 0.5em;
 }
-.acf-mc-ft-save-success.acf-success-message, .acf-mc-ft-import-success.acf-success-message {
-    border: 1px solid #46b450;
+.acf-mc-ft-wrap .acf-success-message {
+    border: 2px solid #46b450;
     border-radius: 3px;
     padding: 4px 7px;
-    margin-bottom: 5px;
-    display: inline-block;
+    margin-bottom: 10px;
+    background-color: #fff;
+    color: #2f353e;
 }
 .acf-flexible-content .layout.just-added.bg-green {
     -webkit-box-shadow: 0px 0px 5px 0px rgba(27, 193, 41, 0.55);

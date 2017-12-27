@@ -2,23 +2,11 @@ jQuery(document).ready(function($){
     console.log('ready');
     // make sure acf is loaded, it should be, but just in case
     if (typeof acf == 'undefined') { return; }
-    // add button for save templates
-    /*var button = '<div class="acf-mc-ft-save-wrap">';
-        button += '<div class="acf-mc-ft-save-success acf-success-message" style="display:none;"></div>';
-        button += '<div class="acf-mc-ft-save-error acf-error-message" style="display:none;"></div>';
-        button += '<div class="acf-mc-ft-input"><label for="mc_acf_template_name">'+mc_acf_ft.ft_label+'</label>';
-        button += '<input type="text" class="acf-mc-ft-template-name" value="" name="mc_acf_template_name">';
-        button += '<a href="#" class="acf-mc-ft-save acf-button button button-secondary">Save</a>';
-        button += '</div></div>';
-
-    $('.acf-field-flexible-content .values').each(function(index) {
-        $(this).next().append( button );
-    });*/
 
     var MC_ACF_Flexible_Template = acf.ajax.extend({
 
         events: {
-            'click button.mc-acf-ft-open-import' : '_open_popup',
+            'click button.mc-open' : '_open_popup',
             'click button.acf-mc-ft-close' : '_close_popup',
             'change .acf-templates-select' : '_import_template',
             'click .acf-mc-ft-save' : '_save_template',
@@ -28,13 +16,14 @@ jQuery(document).ready(function($){
 
             e.preventDefault();
             e.stopImmediatePropagation();
+            // close other popups
+            $('.popup').hide();
             // vars
-            var parentFlex = e.$el.closest('.acf-field-flexible-content');
-
-            var popup = $( parentFlex.find('.acf-mc-import-content.popup') );
+            var popup = $( e.$el.next('.popup') );
 
             if(popup.length) {
                 $(popup).show();
+                $(popup).removeClass('-close');
                 $(popup).addClass('-open');
             }
         },
@@ -44,12 +33,12 @@ jQuery(document).ready(function($){
             e.preventDefault();
             e.stopImmediatePropagation();
             // vars
-            var parentFlex = e.$el.closest('.acf-field-flexible-content');
 
-            var popup = $( parentFlex.find('.acf-mc-import-content.popup') );
+            var popup = $( e.$el.parent('.popup') );
 
             if(popup.length) {
                 $(popup).hide();
+                $(popup).removeClass('-open');
                 $(popup).addClass('-close');
             }
         },

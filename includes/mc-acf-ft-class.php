@@ -62,18 +62,38 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                 && isset($field['key'])
                 && !empty($field['key'])) {
 
-                $label .= $this->mc_ft_get_templates($field['key']);
+                
+
+                $label .= '<div class="acf-mc-ft-wrap">';
+                ob_start();
+                // Capability for export and import
+                $import_cap = 'edit_others_pages';
+                $import_cap = apply_filters( 'mc_ft_import_cap', $import_cap );
+
+                if( current_user_can($import_cap) ) {
+                    $label .= $this->mc_ft_select_display($field['key']);
+                }
+
+                $save_cap = 'edit_others_pages';
+                $save_cap = apply_filters( 'mc_ft_save_cap', $save_cap );
+
+                if( current_user_can($save_cap) ) {
+                    $label .= $this->mc_ft_save_display($field['key']);
+                }
+                $label .= ob_get_clean();
+                $label .= '</div>';
+
             }
 
             return $label;
         }
 
         /*
-        * mc_ft_add_filter_label
+        * mc_ft_select_display
         * get acf_template CPT list for the current field group 
         * $field_key : the current field key group
         */
-        public function mc_ft_get_templates($field_key){
+        public function mc_ft_select_display($field_key){
 
             $args_templates = array(
                 'post_type' => 'acf_template',
@@ -85,41 +105,57 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             );
 
             $acf_templates = get_posts( $args_templates );
-
-            echo '<div class="acf-mc-import-wrap">';
-
-            echo '<button type="button" class="button button-secondary mc-acf-ft-open-import">
-            '.__('Import / save template', 'mc-acf-ft-template').'
-            </button>';
+            ?>
+            <button type="button" class="button button-primary mc-acf-ft-open-import mc-open">
+            <?php _e('Load template', 'mc-acf-ft-template'); ?>
+            </button>
             
-            echo '<div class="acf-mc-import-content popup acf-fc-popup -bottom">';
-            echo '<button type="button" class="handlediv acf-mc-ft-close"><span class="dashicons dashicons-no-alt"><span class="screen-reader-text">'. __('Close import export modal.', 'mc-acf-ft-template').'</span></span></button>';
-            echo '<label for="acf_templates">'. __('Import template', 'mc-acf-ft-template').'</label>';
-            if( $acf_templates ) {
-                
-                echo '<div class="acf-mc-ft-import-success acf-success-message" style="display:none;"></div>';
-                echo '<div class="acf-mc-ft-import-error acf-error-message" style="display:none;"></div>';
-                echo '<select name="acf_templates" class="acf-templates-select">';
-                echo '<option value="0">--</option>';
+            <div class="acf-mc-import-content popup acf-fc-popup">
+            <button type="button" class="handlediv acf-mc-ft-close"><span class="dashicons dashicons-no-alt"><span class="screen-reader-text"><?php _e('Close import modal.', 'mc-acf-ft-template'); ?></span></span></button>
+            <div class="acf-mc-ft-save-wrap">
+                <div class="acf-mc-ft-import-success acf-success-message" style="display:none;"></div>
+                <div class="acf-mc-ft-import-error acf-error-message" style="display:none;"></div>
+                <label for="acf_templates"><?php _e('Choose a template :', 'mc-acf-ft-template'); ?></label>
+                <?php
+                if( $acf_templates ) : ?>
+                    <select name="acf_templates" class="acf-templates-select">
+                        <option value="0">--</option>
+                        <?php
+                        foreach( $acf_templates as $acf_template ) : ?>
+                            <option value="<?php echo $acf_template->ID; ?>"><?php echo $acf_template->post_title; ?></option>
+                        <?php endforeach; ?>
 
-                foreach( $acf_templates as $acf_template ) {
+                    </select>
+                <?php else : ?>
+                    <p><?php _e('No template found for this flexible', 'mc-acf-ft-template'); ?></p>
+                <?php endif; ?>
+                </div>
+            </div>
+            <?php
+        }
 
-                    echo '<option value="'.$acf_template->ID.'">'.$acf_template->post_title.'</option>';
-                }
-
-                echo '</select>';
-            } else {
-                echo '<p>'. __('No template found for this flexible', 'mc-acf-ft-template').'</p>';
-            }
-            echo '<div class="acf-mc-ft-save-wrap">';
-                echo '<div class="acf-mc-ft-save-success acf-success-message" style="display:none;"></div>';
-                echo '<div class="acf-mc-ft-save-error acf-error-message" style="display:none;"></div>';
-                echo '<div class="acf-mc-ft-input"><label for="mc_acf_template_name">'. __('Save template :', 'mc-acf-ft-template').'</label>';
-                echo '<input type="text" class="acf-mc-ft-template-name" value="" name="mc_acf_template_name">';
-                echo '<button class="acf-mc-ft-save acf-button button button-secondary">'. __('Save', 'mc-acf-ft-template').'</button>';
-                echo '</div></div>';
-            echo '</div>'; // content inside
-            echo '</div>'; // wrap
+        /*
+        * mc_ft_save_display
+        * get acf_template CPT list for the current field group 
+        * $field_key : the current field key group
+        */
+        public function mc_ft_save_display($field_key){
+            ?>
+            <button type="button" class="button button-primary mc-acf-ft-open-save mc-open">
+            <?php _e('Save template', 'mc-acf-ft-template'); ?>
+            </button>
+            
+            <div class="acf-mc-save-content popup acf-fc-popup">
+            <button type="button" class="handlediv acf-mc-ft-close"><span class="dashicons dashicons-no-alt"><span class="screen-reader-text"><?php _e('Close save modal.', 'mc-acf-ft-template'); ?></span></span></button>
+                <div class="acf-mc-ft-save-wrap">
+                    <div class="acf-mc-ft-save-success acf-success-message" style="display:none;"></div>
+                    <div class="acf-mc-ft-save-error acf-error-message" style="display:none;"></div>
+                    <label for="mc_acf_template_name"><?php _e('Name the template :', 'mc-acf-ft-template'); ?></label>
+                    <input type="text" class="acf-mc-ft-template-name" value="" name="mc_acf_template_name">
+                    <button class="acf-mc-ft-save acf-button button button-secondary"><?php _e('Save', 'mc-acf-ft-template'); ?></button>
+                </div>
+            </div>
+            <?php
         }
 
         /*
@@ -341,10 +377,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
                                 ob_start();
                                 // render LAYOUT
-                                $acf_flex_class->render_layout( $parent_object, 
-                                    $fake_layouts[ $value['acf_fc_layout'] ], 
-                                    $initial_count, 
-                                    $value );
+                                $acf_flex_class->render_layout( $parent_object, $fake_layouts[ $value['acf_fc_layout'] ], 
+                                    $initial_count, $value );
                                 $item[] = ob_get_clean();
                                 // increment counter
                                 $initial_count++;
