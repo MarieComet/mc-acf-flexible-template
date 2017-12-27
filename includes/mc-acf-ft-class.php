@@ -303,53 +303,68 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                     // needed in the render_layout function
                     $parent_object = get_field_object($layout_parent_key, true, true);
 
-                    $acf_flex_class = new acf_field_flexible_content();
+                    // acf flexible main class
+                    if(class_exists('acf_field_flexible_content')) {
+                        $acf_flex_class = new acf_field_flexible_content();
 
-                    /*
-                    * Some loops, here's the point :
-                    * When saving template, I add to post_meta ONLY the serialized values from the flexible content
-                    * (which meen only layouts, and not all the flexible parent group) for the current post.
-                    * I could save ALL the parent group object and simply output it here and avoid some loops
-                    * But flexible content field can be VERY large and complex, which meen a lot of data.
-                    * I prefer rebuild the field object here and put our layouts value in.
-                    */
-                    // we push our saved template values in group parent object
-                    foreach($layouts as $i => $value ) {
-                        $parent_object['value'][] = $value;
-                        // add the name according to the group parent key, used in layout input hidden
-                        // used by ACF in render_layout function
-                        $parent_object['name'] = 'acf['.$layout_parent_key.']';
-                    }
+                        /*
+                        * Some loops, here's the point :
+                        * When saving template, I add to post_meta ONLY the serialized values from the flexible content
+                        * (which meen only layouts, and not all the flexible parent group) for the current post.
+                        * I could save ALL the parent group object and simply output it here and avoid some loops
+                        * But flexible content field can be VERY large and complex, which meen a lot of data.
+                        * I prefer rebuild the field object here and put our layouts value in.
+                        */
+                        // we push our saved template values in group parent object
+                        foreach($layouts as $i => $value ) {
+                            $parent_object['value'][] = $value;
+                            // add the name according to the group parent key, used in layout input hidden
+                            // used by ACF in render_layout function
+                            $parent_object['name'] = 'acf['.$layout_parent_key.']';
+                        }
 
-                    // here we are creating a "fake" layouts array
-                    // based on the group parent object (flexible)
-                    $fake_layouts = array();
+                        // here we are creating a "fake" layouts array
+                        // based on the group parent object (flexible)
+                        $fake_layouts = array();
 
-                    // loop on group parent layouts and push the name, used later by ACF
-                    foreach( $parent_object['layouts'] as $k => $layout ) {
-                        $fake_layouts[ $layout['name'] ] = $layout;
-                    }
+                        // loop on group parent layouts and push the name, used later by ACF
+                        foreach( $parent_object['layouts'] as $k => $layout ) {
+                            $fake_layouts[ $layout['name'] ] = $layout;
+                        }
 
-                    $item = array();
-                    // loop on parent object values, now contain our templates values
+                        $item = array();
+                        // loop on parent object values, now contain our templates values
 
-                    foreach( $parent_object['value'] as $i => $value ):
-                        //error_log(print_r($value, true));
-                        ob_start();
-                        // render LAYOUT
-                        $acf_flex_class->render_layout( $parent_object, $fake_layouts[ $value['acf_fc_layout'] ], $initial_count, $value );
-                        $item[] = ob_get_clean();
-                        // increment counter
-                        $initial_count++;
-                    endforeach;
-                    
-                    $json['layouts'] = $item;
-                    $json['message'] = __('Template imported, remember to save the post.', 'mc-acf-ft-template');
-                    if(is_array($item)) {
-                        wp_send_json_success($json);
+                        foreach( $parent_object['value'] as $i => $value ) {
+                            // check if layout exist in parent group now
+                            if(array_key_exists($value['acf_fc_layout'], $fake_layouts)) {
+
+                                ob_start();
+                                // render LAYOUT
+                                $acf_flex_class->render_layout( $parent_object, 
+                                    $fake_layouts[ $value['acf_fc_layout'] ], 
+                                    $initial_count, 
+                                    $value );
+                                $item[] = ob_get_clean();
+                                // increment counter
+                                $initial_count++;
+
+                            }
+                        }
+
+                        $json['layouts'] = $item;
+                        $json['message'] = __('Template imported, remember to save the post.', 'mc-acf-ft-template');
+                        if(is_array($item)) {
+                            wp_send_json_success($json);
+                        }
+                    } else {
+                        $error['code'] = -3;
+                        $error['message'] =  __('ACF main class not found.', 'mc-acf-ft-template');
+                        wp_send_json_error($error);
+                        exit;
                     }
                 } else {
-                    $error['code'] = -3;
+                    $error['code'] = -4;
                     $error['message'] =  __('You can\'t import empty template.', 'mc-acf-ft-template');
                     wp_send_json_error($error);
                     exit;
