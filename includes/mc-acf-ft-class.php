@@ -37,8 +37,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         public function mc_ft_acf_field_groups_add_settings($field) {
             // min
             acf_render_field_setting( $field, array(
-                'label'         => __('Available for export and import templates.','mc-acf-ft-template'),
-                'instructions'  => __('This flexible field should display import/export functionnality ?', 'mc-acf-ft-template'),
+                'label'         => __('Save and load templates functionality','mc-acf-ft-template'),
+                'instructions'  => __('This flexible field should display save/load functionnality ?', 'mc-acf-ft-template'),
                 'type'          => 'true_false',
                 'name'          => 'mc_acf_ft_true_false',
                 'ui'            => 1,
@@ -196,7 +196,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             // make sure our template name is set
             if ( !isset($_POST['mc_acf_template_name']) ) {
                 $error['code'] = -1;
-                $error['message'] =  __('No save template index', 'mc-acf-ft-template');
+                $error['message'] =  __('Template name input not found.', 'mc-acf-ft-template');
                 wp_send_json_error($error);
                 exit;
             }
@@ -260,7 +260,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
                 } else {
                     $error['code'] = -4;
-                    $error['message'] =  __('No parent key found.', 'mc-acf-ft-template');
+                    $error['message'] =  __('No layouts for this flexible field.', 'mc-acf-ft-template');
                     wp_send_json_error($error);
                     exit;
                 }
@@ -304,7 +304,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             // make sure our template name is set
             if ( !isset($_POST['acf_templates']) ) {
                 $error['code'] = -1;
-                $error['message'] =  __('No template selected.', 'mc-acf-ft-template');
+                $error['message'] =  __('Import template select not found.', 'mc-acf-ft-template');
                 wp_send_json_error($error);
                 exit;
             }

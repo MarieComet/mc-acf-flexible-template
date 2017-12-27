@@ -44,7 +44,7 @@ function mc_acf_ft_missing_notice(){
     if( get_transient( 'mc-acf-admin-notice' ) && !class_exists('acf') ) {
         ?>
         <div class="notice notice-error is-dismissible">
-            <p><?php _e( 'This website needs "Advanced Custom Fields Pro" to run. Please download and activate it', 'mc-acf-ft-template' ); ?></p>
+            <p><?php _e( 'MC ACF Flexible Template plugin needs "Advanced Custom Fields Pro" to run. Please download and activate it', 'mc-acf-ft-template' ); ?></p>
         </div>
         <?php
         /* Delete transient, only display this notice once. */

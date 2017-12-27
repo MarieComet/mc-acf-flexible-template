@@ -73,7 +73,7 @@ add_action( 'manage_acf_template_posts_custom_column' , 'custom_acf_template_col
 
 function set_custom_edit_acf_template_columns($columns) {
     //unset( $columns['author'] );
-    $columns['acf_template_group'] = __( 'Original Flexible', 'mc-acf-ft-template' );
+    $columns['acf_template_group'] = __( 'Saved from field :', 'mc-acf-ft-template' );
     return $columns;
 }
 
