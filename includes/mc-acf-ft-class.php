@@ -410,5 +410,12 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         } // end public function enqueue_script
         
     }
-    new MC_Acf_Fexlible_Template();
+
+    global $mc_acf_ft;
+    
+    if( !isset($mc_acf_ft) ) {
+
+        $mc_acf_ft = new MC_Acf_Fexlible_Template();
+
+    }
 }
