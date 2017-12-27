@@ -20,6 +20,13 @@ Advanced Custom Fields Pro 5.6 or greater has to be installed and activated.
 * You can rename / delete your templates in admin > ACF Templates (edit templates on the road...).
 * See screenshots.
 
+## FAQ
+
+### How to define which type of user has access to these features?
+
+* There is two filters you can use for that :
+- `mc_ft_import_cap` and `mc_ft_save_cap` which you must pass one or more WordPress capabilities.
+
 ## Screenshots
 
 * Flexible field setting
