@@ -15,7 +15,8 @@ Advanced Custom Fields Pro 5.6 or greater has to be installed and activated.
 * Download the zip archive and upload it to your WordPress site.
 * Install and activate Advanced Custom Fields Pro 5.6 or greater. 
 * Activate the plugin.
-* Export and import will be turned on by default, if you want disable them, go in your flexible field settings.
+* Export and import will be turned on by default for new flexible fields, if you want disable them, go in your flexible field settings.
+* If your flexible field is registered via PHP, you must add `'mc_acf_ft_true_false '=> 1` in the options of this last one (after min, max and button_label options)
 * Export and Import will show on your flexible fields.
 * You can rename / delete your templates in admin > ACF Templates (edit templates on the road...).
 * See screenshots.
@@ -25,7 +26,7 @@ Advanced Custom Fields Pro 5.6 or greater has to be installed and activated.
 ### How to define which type of user has access to these features?
 
 * There is two filters you can use for that :
-- `mc_ft_import_cap` and `mc_ft_save_cap` which you must pass one or more WordPress capabilities.
+`mc_ft_import_cap` and `mc_ft_save_cap` which you must pass one or more WordPress capabilities.
 
 ## Screenshots
 
