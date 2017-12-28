@@ -102,6 +102,8 @@ jQuery(document).ready(function($){
 
                         setTimeout(function(){
                             $(succes_div).text( '' ).hide();
+                            // close other popups
+                            $('.popup').hide();
                             //$(parentValues).find('.layout').removeClass('bg-green');
                         }, 5000);
 
@@ -173,6 +175,8 @@ jQuery(document).ready(function($){
                         $(succes_div).text( json.data.message ).show();
                         setTimeout(function(){
                             $(succes_div).text( '' ).hide();
+                            // close other popups
+                            $('.popup').hide();
                         }, 5000);
                     } else {
                         //console.log(json.data.message);
