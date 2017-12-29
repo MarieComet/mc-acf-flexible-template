@@ -160,7 +160,6 @@ jQuery(document).ready(function($){
 
             // lock form
             acf.validation.toggle( $form, 'lock' );
-            //console.log(data);
 
             $.post({
                 url: acf.get('ajaxurl'),

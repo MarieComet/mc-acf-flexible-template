@@ -62,8 +62,6 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                 && isset($field['key'])
                 && !empty($field['key'])) {
 
-                
-
                 $label .= '<div class="acf-mc-ft-wrap">';
                 ob_start();
                 // Capability for export and import
@@ -212,8 +210,6 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             // we have our custom field and acf post data
             if( isset( $_POST['mc_acf_parent_key'] ) && !empty( $_POST['mc_acf_parent_key'] ) ) {
 
-                //error_log(print_r($_POST, true));
-
                 $template_name = $_POST['mc_acf_template_name'];
                 $parent_key = $_POST['mc_acf_parent_key'];
                 
@@ -231,12 +227,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                         'post_content' => '',
                         'post_status'  => 'publish',
                         'post_author'  => get_current_user_id(),
-                        'post_type' => 'acf_template',
-                        'meta_input'   => array(
-                            '_flex_layout_parent' => $parent_key,
-                            '_flex_layout_data' => $fields,
-
-                        ),
+                        'post_type' => 'acf_template'
                     );
 
                     $post_id = wp_insert_post($post_arr);
@@ -247,6 +238,12 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                         wp_send_json_error($error);
                         exit;
                     } else {
+
+                        if( is_string($fields) ) {
+                            $fields =  wp_slash($fields);
+                            
+                        }
+
                         if ( ! add_post_meta( $post_id, '_flex_layout_parent', $parent_key, true ) ) { 
                            update_post_meta( $post_id, '_flex_layout_parent', $parent_key );
                         }
@@ -374,6 +371,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                         foreach( $parent_object['value'] as $i => $value ) {
                             // check if layout exist in parent group now
                             if(array_key_exists($value['acf_fc_layout'], $fake_layouts)) {
+                                // unslash values
+                                $value =  wp_unslash($value);
 
                                 ob_start();
                                 // render LAYOUT
