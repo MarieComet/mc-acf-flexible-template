@@ -114,8 +114,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
                 if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) : ?>
 
-                    <select name="acf_templates" class="acf-templates-select">
-                        <option value="0">--</option>
+                    <select name="acf_templates" class="acf-templates-select mc-acf-ft-select2" style="width: 100%">
                     <?php
                     foreach( $templates_tax as $term ) :
                         $args_templates = array(
@@ -135,7 +134,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                             foreach( $acf_templates as $acf_template ) : ?>
                                 <option value="<?php echo $acf_template->ID; ?>"><?php echo $acf_template->post_title; ?></option>
                             <?php endforeach; ?>
-                        </optgroup>
+                            </optgroup>
                         <?php endif; 
                     endforeach; ?>
                     </select>

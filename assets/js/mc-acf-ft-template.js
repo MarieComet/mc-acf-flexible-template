@@ -1,8 +1,10 @@
 jQuery(document).ready(function($){
-    console.log('ready');
+
     // make sure acf is loaded, it should be, but just in case
     if (typeof acf == 'undefined') { return; }
 
+    $('.mc-acf-ft-select2').select2();
+    
     var MC_ACF_Flexible_Template = acf.ajax.extend({
 
         events: {
