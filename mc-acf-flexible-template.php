@@ -29,7 +29,10 @@ register_activation_hook( __FILE__, 'mc_acf_ft_activation_hook' );
  */
 function mc_acf_ft_activation_hook() {
     /* Create transient data */
+
     set_transient( 'mc-acf-admin-notice', true, 5 );
+    // set transient to check on activation insert term
+    set_transient( 'mc-acf-ft-default-term', true, 0 );
 }
 
 add_action( 'admin_notices', 'mc_acf_ft_missing_notice' );
@@ -54,7 +57,7 @@ function mc_acf_ft_missing_notice(){
 add_action('plugins_loaded', 'mc_acf_ft_load');
 function mc_acf_ft_load() {
     if(class_exists('acf')) {
-        require_once('includes/mc-acf-ft-register-cpt.php');
-        require_once('includes/mc-acf-ft-class.php');
+        include_once('includes/mc-acf-ft-register-cpt.php');
+        include_once('includes/mc-acf-ft-class.php');
     }
 }

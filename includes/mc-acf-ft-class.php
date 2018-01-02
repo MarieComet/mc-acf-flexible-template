@@ -54,7 +54,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         */
         public function mc_ft_add_filter_label($label, $field){
             global $post, $pagenow, $typenow;
-            
+
             if( isset($field['type']) 
                 && $field['type'] == 'flexible_content' 
                 && isset($field['mc_acf_ft_true_false']) && $field['mc_acf_ft_true_false']
@@ -93,16 +93,12 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         */
         public function mc_ft_select_display($field_key){
 
-            $args_templates = array(
-                'post_type' => 'acf_template',
-                'posts_per_page' => -1,
-                'post_status' => 'publish',
-                'meta_key'     => '_flex_layout_parent',
-                'meta_value'   => $field_key,
-                'meta_compare' => '='
-            );
+            $templates_tax = get_terms( array(
+                'taxonomy' => 'acf_template_tax',
+                'hide_empty' => true,
+                'orderby' => 'name'
+            ) );
 
-            $acf_templates = get_posts( $args_templates );
             ?>
             <button type="button" class="button button-primary mc-acf-ft-open-import mc-open">
             <?php _e('Load template', 'mc-acf-ft-template'); ?>
@@ -115,16 +111,35 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                 <div class="acf-mc-ft-import-error acf-error-message" style="display:none;"></div>
                 <label for="acf_templates"><?php _e('Choose a template :', 'mc-acf-ft-template'); ?></label>
                 <?php
-                if( $acf_templates ) : ?>
+
+                if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) : ?>
+
                     <select name="acf_templates" class="acf-templates-select">
                         <option value="0">--</option>
-                        <?php
-                        foreach( $acf_templates as $acf_template ) : ?>
-                            <option value="<?php echo $acf_template->ID; ?>"><?php echo $acf_template->post_title; ?></option>
-                        <?php endforeach; ?>
+                    <?php
+                    foreach( $templates_tax as $term ) :
+                        $args_templates = array(
+                            'post_type' => 'acf_template',
+                            'posts_per_page' => -1,
+                            'post_status' => 'publish',
+                            'acf_template_tax' => $term->slug,
+                            'meta_key'     => '_flex_layout_parent',
+                            'meta_value'   => $field_key,
+                            'meta_compare' => '='
+                        );
+                        $acf_templates = get_posts( $args_templates );
 
+                        if( $acf_templates ) : ?>
+                            <optgroup label="<?php echo $term->name; ?>">
+                            <?php
+                            foreach( $acf_templates as $acf_template ) : ?>
+                                <option value="<?php echo $acf_template->ID; ?>"><?php echo $acf_template->post_title; ?></option>
+                            <?php endforeach; ?>
+                        </optgroup>
+                        <?php endif; 
+                    endforeach; ?>
                     </select>
-                <?php else : ?>
+                <?php else: ?>
                     <p><?php _e('No template found for this flexible', 'mc-acf-ft-template'); ?></p>
                 <?php endif; ?>
                 </div>
