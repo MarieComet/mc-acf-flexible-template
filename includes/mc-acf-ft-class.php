@@ -126,8 +126,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                     $acf_templates = get_posts( $args_templates );
 
                     if( $acf_templates ) : ?>
-                    <label for="acf_templates"><?php _e('Choose a template :', 'mc-acf-ft-template'); ?>
-                        <select name="acf_templates" class="acf-templates-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Choose a template :', 'mc-acf-ft-template'); ?>">
+                    <label for="acf_templates"><?php _e('Select a template :', 'mc-acf-ft-template'); ?>
+                        <select name="acf_templates" class="acf-templates-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Select a template', 'mc-acf-ft-template'); ?>">
                             <option></option>
                             <?php
                             // array for our templates without terms
@@ -201,8 +201,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                     <div class="acf-mc-ft-save-error acf-error-message" style="display:none;"></div>
                     <?php
                     if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) : ?>
-                    <label for="acf_templates_terms"><?php _e('Choose one or more terms :', 'mc-acf-ft-template'); ?>
-                        <select name="acf_templates_terms" class="acf-templates-terms-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Choose a term :', 'mc-acf-ft-template'); ?>" multiple="multiple">
+                    <label for="acf_templates_terms"><?php _e('Select one or more terms :', 'mc-acf-ft-template'); ?>
+                        <select name="acf_templates_terms" class="acf-templates-terms-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Select a term', 'mc-acf-ft-template'); ?>" multiple="multiple">
                         <option></option>
                         <?php foreach( $templates_tax as $term ) : ?>
                             <option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>

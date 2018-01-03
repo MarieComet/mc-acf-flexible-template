@@ -70,9 +70,9 @@ add_action( 'init', 'mc_acf_ft_register_cpt', 0 );
 function mc_acf_ft_register_tax() {
 
     $labels = array(
-        'name'                       => _x( 'ACF Template categories', 'Taxonomy General Name', 'mc-acf-ft-template' ),
-        'singular_name'              => _x( 'ACF Template category', 'Taxonomy Singular Name', 'mc-acf-ft-template' ),
-        'menu_name'                  => __( 'ACF Template categories', 'mc-acf-ft-template' ),
+        'name'                       => _x( 'Categories', 'Taxonomy General Name', 'mc-acf-ft-template' ),
+        'singular_name'              => _x( 'Category', 'Taxonomy Singular Name', 'mc-acf-ft-template' ),
+        'menu_name'                  => __( 'Categories', 'mc-acf-ft-template' ),
         'all_items'                  => __( 'All Items', 'mc-acf-ft-template' ),
         'parent_item'                => __( 'Parent Item', 'mc-acf-ft-template' ),
         'parent_item_colon'          => __( 'Parent Item:', 'mc-acf-ft-template' ),
