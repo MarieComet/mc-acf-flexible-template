@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MC ACF Flexible Template\n"
-"POT-Creation-Date: 2017-12-27 14:52+0100\n"
-"PO-Revision-Date: 2017-12-27 14:52+0100\n"
+"POT-Creation-Date: 2018-01-03 12:54+0100\n"
+"PO-Revision-Date: 2018-01-03 12:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: Marie Comet <hello@mariecomet.fr>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -26,87 +26,107 @@ msgstr ""
 "Souhaitez-vous afficher la fonctionnalité de sauvegarde/chargement de "
 "modèles ?"
 
-#: includes/mc-acf-ft-class.php:110
+#: includes/mc-acf-ft-class.php:104
 msgid "Load template"
 msgstr "Charger un modèle"
 
-#: includes/mc-acf-ft-class.php:114
+#: includes/mc-acf-ft-class.php:108
 msgid "Close import modal."
 msgstr "Fermer la boîte de dialogue de chargement."
 
-#: includes/mc-acf-ft-class.php:118
-msgid "Choose a template :"
+#: includes/mc-acf-ft-class.php:129
+msgid "Select a template :"
 msgstr "Sélectionnez un modèle :"
 
 #: includes/mc-acf-ft-class.php:130
+msgid "Select a template"
+msgstr "Sélectionnez un modèle"
+
+#: includes/mc-acf-ft-class.php:162
+msgid "Uncategorised"
+msgstr "Non classé(s)"
+
+#: includes/mc-acf-ft-class.php:170
+msgid "Load"
+msgstr "Charger"
+
+#: includes/mc-acf-ft-class.php:172
 msgid "No template found for this flexible"
 msgstr "Pas de modèle trouvé pour ce champs flexible."
 
-#: includes/mc-acf-ft-class.php:145
+#: includes/mc-acf-ft-class.php:194
 msgid "Save template"
 msgstr "Sauvegarder le modèle"
 
-#: includes/mc-acf-ft-class.php:149
+#: includes/mc-acf-ft-class.php:198
 msgid "Close save modal."
 msgstr "Fermer la boîte de dialogue de sauvegarde."
 
-#: includes/mc-acf-ft-class.php:153
+#: includes/mc-acf-ft-class.php:204
+msgid "Select one or more terms :"
+msgstr "Sélectionnez un ou plusieurs termes :"
+
+#: includes/mc-acf-ft-class.php:205
+msgid "Select a term"
+msgstr "Sélectionnez un terme"
+
+#: includes/mc-acf-ft-class.php:213
 msgid "Name the template :"
 msgstr "Nommez le modèle :"
 
-#: includes/mc-acf-ft-class.php:155
+#: includes/mc-acf-ft-class.php:217
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: includes/mc-acf-ft-class.php:172 includes/mc-acf-ft-class.php:288
+#: includes/mc-acf-ft-class.php:234 includes/mc-acf-ft-class.php:355
 msgid "Ok!"
 msgstr ""
 
-#: includes/mc-acf-ft-class.php:191
+#: includes/mc-acf-ft-class.php:253
 msgid "You can't save empty template."
 msgstr "Vous ne pouvez pas sauvegarder un modèle vide."
 
-#: includes/mc-acf-ft-class.php:199
+#: includes/mc-acf-ft-class.php:261
 msgid "Template name input not found."
 msgstr "Le champs du nom du modèle n'a pas été trouvé."
 
-#: includes/mc-acf-ft-class.php:207
+#: includes/mc-acf-ft-class.php:269
 msgid "Please fill the template name."
 msgstr "Saisissez un nom pour ce modèle."
 
-#: includes/mc-acf-ft-class.php:246
+#: includes/mc-acf-ft-class.php:301
 msgid "Error creating post."
 msgstr "Erreur lors de la création du modèle."
 
-#: includes/mc-acf-ft-class.php:258
+#: includes/mc-acf-ft-class.php:325
 msgid "Template saved, remember to save the post."
 msgstr "Modèle sauvegardé, pensez à enregistrer votre contenu."
 
-#: includes/mc-acf-ft-class.php:263
+#: includes/mc-acf-ft-class.php:330
 msgid "No layouts for this flexible field."
 msgstr "Aucun layout trouvé pour ce champs flexible."
 
-#: includes/mc-acf-ft-class.php:307
+#: includes/mc-acf-ft-class.php:374
 msgid "Import template select not found."
 msgstr "Le sélecteur de modèle n'a pas été trouvé."
 
-#: includes/mc-acf-ft-class.php:315
+#: includes/mc-acf-ft-class.php:382
 msgid "Please select a template."
 msgstr "Sélectionnez un modèle."
 
-#: includes/mc-acf-ft-class.php:390
+#: includes/mc-acf-ft-class.php:459
 msgid "Template imported, remember to save the post."
 msgstr "Modèle chargé, pensez à enregistrer votre contenu."
 
-#: includes/mc-acf-ft-class.php:396
+#: includes/mc-acf-ft-class.php:465
 msgid "ACF main class not found."
 msgstr "La classe ACF n'a pas été trouvée."
 
-#: includes/mc-acf-ft-class.php:402
+#: includes/mc-acf-ft-class.php:471
 msgid "You can't import empty template."
 msgstr "Vous ne pouvez pas charger un modèle vide."
 
-#: includes/mc-acf-ft-class.php:432
+#: includes/mc-acf-ft-class.php:501
 msgid "Save as template :"
 msgstr "Sauvegarder le modèle :"
 
@@ -122,47 +142,52 @@ msgstr "Modèle ACF"
 
 #: includes/mc-acf-ft-register-cpt.php:15
 msgid "ACF Template Archives"
-msgstr ""
+msgstr "Archives des modèles ACF"
 
 #: includes/mc-acf-ft-register-cpt.php:16
 msgid "ACF Template Attributes"
-msgstr ""
+msgstr "Attributs des modèles ACF"
 
 #: includes/mc-acf-ft-register-cpt.php:17
+#: includes/mc-acf-ft-register-cpt.php:78
 msgid "Parent Item:"
-msgstr ""
+msgstr "Parent:"
 
 #: includes/mc-acf-ft-register-cpt.php:18
-msgid "All Items"
-msgstr ""
+msgid "All ACF Templates"
+msgstr "Tous les modèles ACF"
 
 #: includes/mc-acf-ft-register-cpt.php:19
+#: includes/mc-acf-ft-register-cpt.php:80
 msgid "Add New Item"
-msgstr ""
+msgstr "Ajouter"
 
 #: includes/mc-acf-ft-register-cpt.php:20
 msgid "Add New"
-msgstr ""
+msgstr "Ajouter"
 
 #: includes/mc-acf-ft-register-cpt.php:21
 msgid "New Item"
-msgstr ""
+msgstr "Nouveau"
 
 #: includes/mc-acf-ft-register-cpt.php:22
+#: includes/mc-acf-ft-register-cpt.php:81
 msgid "Edit Item"
-msgstr ""
+msgstr "Modifier"
 
 #: includes/mc-acf-ft-register-cpt.php:23
+#: includes/mc-acf-ft-register-cpt.php:82
 msgid "Update Item"
-msgstr ""
+msgstr "Mettre à jour"
 
 #: includes/mc-acf-ft-register-cpt.php:24
+#: includes/mc-acf-ft-register-cpt.php:83
 msgid "View Item"
-msgstr ""
+msgstr "Voir"
 
 #: includes/mc-acf-ft-register-cpt.php:25
 msgid "View Items"
-msgstr ""
+msgstr "Voir"
 
 #: includes/mc-acf-ft-register-cpt.php:26
 msgid "Search Item"
@@ -201,10 +226,12 @@ msgid "Uploaded to this item"
 msgstr ""
 
 #: includes/mc-acf-ft-register-cpt.php:35
+#: includes/mc-acf-ft-register-cpt.php:91
 msgid "Items list"
 msgstr ""
 
 #: includes/mc-acf-ft-register-cpt.php:36
+#: includes/mc-acf-ft-register-cpt.php:92
 msgid "Items list navigation"
 msgstr ""
 
@@ -212,11 +239,52 @@ msgstr ""
 msgid "Filter items list"
 msgstr ""
 
+#: includes/mc-acf-ft-register-cpt.php:75
 #: includes/mc-acf-ft-register-cpt.php:76
+msgid "Categories"
+msgstr "Catégories"
+
+#: includes/mc-acf-ft-register-cpt.php:77
+msgid "Parent Item"
+msgstr ""
+
+#: includes/mc-acf-ft-register-cpt.php:79
+msgid "New Item Name"
+msgstr ""
+
+#: includes/mc-acf-ft-register-cpt.php:84
+msgid "Separate items with commas"
+msgstr ""
+
+#: includes/mc-acf-ft-register-cpt.php:85
+msgid "Add or remove items"
+msgstr ""
+
+#: includes/mc-acf-ft-register-cpt.php:86
+msgid "Choose from the most used"
+msgstr ""
+
+#: includes/mc-acf-ft-register-cpt.php:87
+msgid "Popular Items"
+msgstr ""
+
+#: includes/mc-acf-ft-register-cpt.php:88
+msgid "Search Items"
+msgstr ""
+
+#: includes/mc-acf-ft-register-cpt.php:89
+msgid "Not Found"
+msgstr ""
+
+#: includes/mc-acf-ft-register-cpt.php:90
+msgid "No items"
+msgstr ""
+
+#: includes/mc-acf-ft-register-cpt.php:116
 msgid "Saved from field :"
 msgstr "Sauvegardé depuis le champs :"
 
-#: includes/mc-acf-ft-register-cpt.php:89
+#: includes/mc-acf-ft-register-cpt.php:129
 msgid "Unable to get parent flexible"
 msgstr "Impossible de récupérer le champs flexible parent."
 
@@ -227,6 +295,15 @@ msgid ""
 msgstr ""
 "L'extension MC ACF Flexible Template requiert \"Advanced Custom Fields Pro\" "
 "pour fonctionner. Téléchargez et installez la."
+
+#~ msgid "All Categories"
+#~ msgstr "Toutes les catégories"
+
+#~ msgid "All Items"
+#~ msgstr "Tous les modèles"
+
+#~ msgid "Choose a template :"
+#~ msgstr "Sélectionnez un modèle :"
 
 #~ msgid "Original Flexible"
 #~ msgstr "Flexible "
