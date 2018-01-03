@@ -529,15 +529,14 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
             $layouts = maybe_unserialize($layouts_serialized);
 
+            // the original ACF field group from which template was saved
+            $layout_parent_key = get_post_meta($flex_layout_id, '_flex_layout_parent', true );
+
+            // get the original field object 
+            // needed in the render_layout function
+            $parent_object = get_field_object($layout_parent_key, true, true);
+
             if( is_array($layouts) && !empty($layouts) ) {
-
-                // the original ACF field group from which template was saved
-                $layout_parent_key = get_post_meta($flex_layout_id, '_flex_layout_parent', true );
-
-                // get the original field object 
-                // needed in the render_layout function
-                $parent_object = get_field_object($layout_parent_key, true, true);
-
                 // acf flexible main class
                 if(class_exists('acf_field_flexible_content')) {
 
@@ -551,6 +550,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                     //
                     acf_render_fields($flex_layout_id, array($parent_object), $el = 'div', $instruction = 'label');
                 }
+            } else {
+                acf_render_fields($flex_layout_id, array($parent_object), $el = 'div', $instruction = 'label');
             }
         }
 
