@@ -7,7 +7,7 @@
     right: 0;
     text-align: left;
     font-weight: normal;
-    min-width: 350px;
+    width: 350px;
 }
 .acf-field .acf-mc-ft-wrap .popup label {
     margin-bottom: 1.5em;
@@ -40,6 +40,8 @@ button.handlediv.acf-mc-ft-close:hover {
 }
 .acf-mc-ft-save-wrap input[type="text"].acf-mc-ft-template-name, .acf-mc-save-content .select2, .acf-mc-import-content .select2 {
     margin-top: 0.5em;
+    color: #383838;
+    font-weight: normal;
 }
 .acf-mc-import-content select.acf-templates-select, .acf-mc-ft-save-wrap select.acf-templates-terms-select {
     min-width: 341px;

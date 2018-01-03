@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MC ACF Flexible Template\n"
-"POT-Creation-Date: 2018-01-03 12:54+0100\n"
-"PO-Revision-Date: 2018-01-03 12:54+0100\n"
+"POT-Creation-Date: 2018-01-03 13:22+0100\n"
+"PO-Revision-Date: 2018-01-03 13:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: Marie Comet <hello@mariecomet.fr>\n"
 "Language: fr_FR\n"
@@ -63,12 +63,12 @@ msgid "Close save modal."
 msgstr "Fermer la boîte de dialogue de sauvegarde."
 
 #: includes/mc-acf-ft-class.php:204
-msgid "Select one or more terms :"
-msgstr "Sélectionnez un ou plusieurs termes :"
+msgid "Select one or more categories :"
+msgstr "Sélectionnez une ou plusieurs catégorie(s)"
 
 #: includes/mc-acf-ft-class.php:205
-msgid "Select a term"
-msgstr "Sélectionnez un terme"
+msgid "Select"
+msgstr "Sélection"
 
 #: includes/mc-acf-ft-class.php:213
 msgid "Name the template :"
@@ -295,6 +295,15 @@ msgid ""
 msgstr ""
 "L'extension MC ACF Flexible Template requiert \"Advanced Custom Fields Pro\" "
 "pour fonctionner. Téléchargez et installez la."
+
+#~ msgid "Select a category"
+#~ msgstr "Sélectionnez une catégorie"
+
+#~ msgid "Select one or more terms :"
+#~ msgstr "Sélectionnez un ou plusieurs termes :"
+
+#~ msgid "Select a term"
+#~ msgstr "Sélectionnez un terme"
 
 #~ msgid "All Categories"
 #~ msgstr "Toutes les catégories"
