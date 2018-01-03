@@ -10,7 +10,7 @@ jQuery(document).ready(function($){
         events: {
             'click button.mc-open' : '_open_popup',
             'click button.acf-mc-ft-close' : '_close_popup',
-            'change .acf-templates-select' : '_import_template',
+            'click .acf-mc-ft-import' : '_import_template',
             'click .acf-mc-ft-save' : '_save_template',
         },
 
@@ -58,8 +58,9 @@ jQuery(document).ready(function($){
             var succes_div = parentFlex.find('.acf-mc-ft-import-success');
 
             $form = $('form#post');
-            
-            var selectedTemplate = e.$el.val();
+
+            var template_select = parentFlex.find('.acf-templates-select');
+            var selectedTemplate = $(template_select).val();
 
             var data = {
                 action      : 'mc_acf_import_template',
@@ -104,10 +105,11 @@ jQuery(document).ready(function($){
 
                         setTimeout(function(){
                             $(succes_div).text( '' ).hide();
+                            // reset select
+                            $(template_select).val(null).trigger('change');
                             // close other popups
                             $('.popup').hide();
-                            //$(parentValues).find('.layout').removeClass('bg-green');
-                        }, 5000);
+                        }, 3000);
 
                     } else {
                         //console.log(json.data.message);
@@ -135,7 +137,11 @@ jQuery(document).ready(function($){
 
             var parentValues = parentFlex.find('.values');
 
-            var template_name = parentFlex.find('.acf-mc-ft-template-name').val();
+            var template_name_input = parentFlex.find('.acf-mc-ft-template-name');
+            var template_name = $(template_name_input).val();
+
+            var template_terms_select = parentFlex.find('.acf-templates-terms-select');
+            var template_terms = $(template_terms_select).val();
 
             var error_div = parentFlex.find('.acf-mc-ft-save-error');
             var succes_div = parentFlex.find('.acf-mc-ft-save-success');
@@ -146,13 +152,16 @@ jQuery(document).ready(function($){
 
             var data = acf.serialize(parentValues);
             
-            // append AJAX action       
+            // append AJAX action
             data.action = 'mc_acf_ft_save_template';
             data.mc_acf_template_name = template_name;
 
-            
             if(parentGroupKey.length) {
                 data.mc_acf_parent_key = parentGroupKey;
+            }
+
+            if(template_terms) {
+                data.mc_acf_template_terms = template_terms;
             }
 
             data = acf.prepare_for_ajax(data);
@@ -170,21 +179,22 @@ jQuery(document).ready(function($){
                 dataType: 'json',
                 action: 'mc_acf_ft_save_template',
                 success: function( json ) {
-
                     if(true === json.success) {
                         $(error_div).hide();
                         $(succes_div).text( json.data.message ).show();
                         setTimeout(function(){
                             $(succes_div).text( '' ).hide();
+                            // reset inputs
+                            $(template_name_input).val('');
+                            $(template_terms_select).val(null).trigger('change');
                             // close other popups
                             $('.popup').hide();
-                        }, 5000);
+                        }, 3000);
                     } else {
                         //console.log(json.data.message);
                         $(succes_div).hide();
                         $(error_div).text( json.data.message ).show();
                     }
-
                     // unlock so WP can publish form
                     acf.validation.busy = 0;
                     acf.validation.toggle( $form, 'unlock' );

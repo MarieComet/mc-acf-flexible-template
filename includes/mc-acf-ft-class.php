@@ -105,70 +105,73 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             </button>
             
             <div class="acf-mc-import-content popup acf-fc-popup">
-            <button type="button" class="handlediv acf-mc-ft-close"><span class="dashicons dashicons-no-alt"><span class="screen-reader-text"><?php _e('Close import modal.', 'mc-acf-ft-template'); ?></span></span></button>
-            <div class="acf-mc-ft-save-wrap">
-                <div class="acf-mc-ft-import-success acf-success-message" style="display:none;"></div>
-                <div class="acf-mc-ft-import-error acf-error-message" style="display:none;"></div>
-                <label for="acf_templates"><?php _e('Choose a template :', 'mc-acf-ft-template'); ?></label>
-                <?php 
-                $args_templates = array(
-                    'post_type' => 'acf_template',
-                    'posts_per_page' => -1,
-                    'post_status' => 'publish',
-                    'meta_query' => array(
-                        array(
-                            'key'     => '_flex_layout_parent',
-                            'value'   => $field_key,
-                            'compare' => '=',
+                <button type="button" class="handlediv acf-mc-ft-close"><span class="dashicons dashicons-no-alt"><span class="screen-reader-text"><?php _e('Close import modal.', 'mc-acf-ft-template'); ?></span></span></button>
+                <div class="acf-mc-ft-save-wrap">
+                    <div class="acf-mc-ft-import-success acf-success-message" style="display:none;"></div>
+                    <div class="acf-mc-ft-import-error acf-error-message" style="display:none;"></div>
+
+                    <?php 
+                    $args_templates = array(
+                        'post_type' => 'acf_template',
+                        'posts_per_page' => -1,
+                        'post_status' => 'publish',
+                        'meta_query' => array(
+                            array(
+                                'key'     => '_flex_layout_parent',
+                                'value'   => $field_key,
+                                'compare' => '=',
+                            ),
                         ),
-                    ),
-                );
-                $acf_templates = get_posts( $args_templates );
+                    );
+                    $acf_templates = get_posts( $args_templates );
 
-                if( $acf_templates ) : ?>
-
-                    <select name="acf_templates" class="acf-templates-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Choose a template :', 'mc-acf-ft-template'); ?>">
-                    <option></option>
-                    <?php
-                    // array for our templates without terms
-                    $without_terms = array();
-                    // if we have terms
-                    if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) :
-                        foreach( $templates_tax as $term ) : ?>
-                            <optgroup label="<?php echo $term->name; ?>">
+                    if( $acf_templates ) : ?>
+                    <label for="acf_templates"><?php _e('Choose a template :', 'mc-acf-ft-template'); ?>
+                        <select name="acf_templates" class="acf-templates-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Choose a template :', 'mc-acf-ft-template'); ?>">
+                            <option></option>
                             <?php
-                            foreach( $acf_templates as $acf_template ) : 
-                                if ( has_term('', 'acf_template_tax', $acf_template->ID) ) :
-                                    if ( has_term($term, 'acf_template_tax', $acf_template->ID) ) : ?>
-                                        <option value="<?php echo $acf_template->ID; ?>"><?php echo $acf_template->post_title; ?></option>
-                                    <?php endif;
-                                else :
-                                    // store templates without this term here for display later
+                            // array for our templates without terms
+                            $without_terms = array();
+                            // if we have terms
+                            if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) :
+                                foreach( $templates_tax as $term ) : ?>
+                                    <optgroup label="<?php echo $term->name; ?>">
+                                    <?php
+                                    foreach( $acf_templates as $acf_template ) : 
+                                        if ( has_term('', 'acf_template_tax', $acf_template->ID) ) :
+                                            if ( has_term($term, 'acf_template_tax', $acf_template->ID) ) : ?>
+                                                <option value="<?php echo $acf_template->ID; ?>"><?php echo $acf_template->post_title; ?></option>
+                                            <?php endif;
+                                        else :
+                                            // store templates without this term here for display later
+                                            $without_terms[] = $acf_template->ID;
+                                        endif; ?>
+                                    <?php endforeach; ?>
+                                    </optgroup>
+                                <?php endforeach;
+                            // if we don't have terms at all
+                            else :
+                                foreach( $acf_templates as $acf_template ) :
                                     $without_terms[] = $acf_template->ID;
-                                endif; ?>
-                            <?php endforeach; ?>
-                            </optgroup>
-                        <?php endforeach;
-                    // if we don't have terms at all
-                    else :
-                        foreach( $acf_templates as $acf_template ) :
-                            $without_terms[] = $acf_template->ID;
-                        endforeach;
-                    endif;
+                                endforeach;
+                            endif;
 
-                    // if we have templates without terms
-                    if( is_array($without_terms) && !empty($without_terms) ) : 
-                        $without_terms = array_unique($without_terms); ?>
-                            <optgroup label="<?php _e('Uncategorised', 'mc-acf-ft-template'); ?>">
-                            <?php foreach( $without_terms as $template ) : ?>
-                                <option value="<?php echo $template; ?>"><?php echo get_the_title($template); ?></option>
-                            <?php endforeach; ?>
-                            </optgroup>
+                            // if we have templates without terms
+                            if( is_array($without_terms) && !empty($without_terms) ) : 
+                                $without_terms = array_unique($without_terms); ?>
+                                    <optgroup label="<?php _e('Uncategorised', 'mc-acf-ft-template'); ?>">
+                                    <?php foreach( $without_terms as $template ) : ?>
+                                        <option value="<?php echo $template; ?>"><?php echo get_the_title($template); ?></option>
+                                    <?php endforeach; ?>
+                                    </optgroup>
+                            <?php endif; ?>
+                        </select>
+                    </label>
+                    <button class="acf-mc-ft-import acf-button button button-secondary"><?php _e('Load', 'mc-acf-ft-template'); ?></button>
+                    <?php else: ?>
+                        <p><?php _e('No template found for this flexible', 'mc-acf-ft-template'); ?></p>
                     <?php endif; ?>
-                    </select>
-                <?php else: ?>
-                    <p><?php _e('No template found for this flexible', 'mc-acf-ft-template'); ?></p>
-                <?php endif; ?>
+                    
                 </div>
             </div>
             <?php
@@ -180,6 +183,11 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         * $field_key : the current field key group
         */
         public function mc_ft_save_display($field_key){
+            $templates_tax = get_terms( array(
+                'taxonomy' => 'acf_template_tax',
+                'hide_empty' => false,
+                'orderby' => 'name'
+            ) );
 
             ?>
             <button type="button" class="button button-primary mc-acf-ft-open-save mc-open">
@@ -191,8 +199,21 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                 <div class="acf-mc-ft-save-wrap">
                     <div class="acf-mc-ft-save-success acf-success-message" style="display:none;"></div>
                     <div class="acf-mc-ft-save-error acf-error-message" style="display:none;"></div>
-                    <label for="mc_acf_template_name"><?php _e('Name the template :', 'mc-acf-ft-template'); ?></label>
+                    <?php
+                    if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) : ?>
+                    <label for="acf_templates_terms"><?php _e('Choose one or more terms :', 'mc-acf-ft-template'); ?>
+                        <select name="acf_templates_terms" class="acf-templates-terms-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Choose a term :', 'mc-acf-ft-template'); ?>" multiple="multiple">
+                        <option></option>
+                        <?php foreach( $templates_tax as $term ) : ?>
+                            <option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
+                        <?php endforeach; ?>
+                        </select>
+                    </label>
+                    <?php endif; ?>
+                    <label for="mc_acf_template_name"><?php _e('Name the template :', 'mc-acf-ft-template'); ?>
+                    <span class="acf-required">*</span>
                     <input type="text" class="acf-mc-ft-template-name" value="" name="mc_acf_template_name">
+                    </label>
                     <button class="acf-mc-ft-save acf-button button button-secondary"><?php _e('Save', 'mc-acf-ft-template'); ?></button>
                 </div>
             </div>
@@ -255,7 +276,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
                 $template_name = $_POST['mc_acf_template_name'];
                 $parent_key = $_POST['mc_acf_parent_key'];
-                
+
                 $fields = $_POST['acf'][$parent_key];
 
                 if( !empty($fields) && is_array($fields) ) {
@@ -284,7 +305,6 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
                         if( is_string($fields) ) {
                             $fields =  wp_slash($fields);
-                            
                         }
 
                         if ( ! add_post_meta( $post_id, '_flex_layout_parent', $parent_key, true ) ) { 
@@ -293,6 +313,13 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
                         if ( ! add_post_meta( $post_id, '_flex_layout_data', $fields, true ) ) { 
                            update_post_meta( $post_id, '_flex_layout_data', $fields );
+                        }
+
+                        if( isset($_POST['mc_acf_template_terms']) && !empty($_POST['mc_acf_template_terms']) ) {
+                            $terms_selected = $_POST['mc_acf_template_terms'];
+                            if( is_array($terms_selected) && !empty($terms_selected) ) {
+                                wp_set_post_terms( $post_id, $terms_selected, 'acf_template_tax', true );
+                            }
                         }
 
                         $json['message'] = __('Template saved, remember to save the post.', 'mc-acf-ft-template');

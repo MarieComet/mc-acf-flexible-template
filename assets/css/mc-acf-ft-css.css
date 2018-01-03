@@ -10,7 +10,7 @@
     min-width: 350px;
 }
 .acf-field .acf-mc-ft-wrap .popup label {
-    margin-bottom: .5em;
+    margin-bottom: 1.5em;
 }
 button.mc-open {
     font-weight: normal;
@@ -32,13 +32,16 @@ button.handlediv.acf-mc-ft-close:hover {
     text-align: right;
     font-weight: normal;
 }
-.acf-mc-ft-save-wrap input[type="text"].acf-mc-ft-template-name, .acf-mc-import-content select.acf-templates-select {
-    width: auto;
+.acf-mc-ft-save-wrap input[type="text"].acf-mc-ft-template-name, .acf-mc-import-content select.acf-templates-select, .acf-mc-ft-save-wrap select.acf-templates-terms-select  {
+    width: 100%;
     vertical-align: bottom;
     margin-right: 0.5em;
     min-width: 300px;
 }
-.acf-mc-import-content select.acf-templates-select {
+.acf-mc-ft-save-wrap input[type="text"].acf-mc-ft-template-name, .acf-mc-save-content .select2, .acf-mc-import-content .select2 {
+    margin-top: 0.5em;
+}
+.acf-mc-import-content select.acf-templates-select, .acf-mc-ft-save-wrap select.acf-templates-terms-select {
     min-width: 341px;
 }
 .acf-mc-ft-wrap .acf-success-message {
