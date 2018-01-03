@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MC ACF Flexible Template\n"
-"POT-Creation-Date: 2018-01-03 13:22+0100\n"
-"PO-Revision-Date: 2018-01-03 13:22+0100\n"
+"POT-Creation-Date: 2018-01-03 14:01+0100\n"
+"PO-Revision-Date: 2018-01-03 14:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: Marie Comet <hello@mariecomet.fr>\n"
 "Language: fr_FR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-KeywordsList: _e;__;_x\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: includes/mc-acf-ft-class.php:40
@@ -130,10 +130,12 @@ msgstr "Vous ne pouvez pas charger un modèle vide."
 msgid "Save as template :"
 msgstr "Sauvegarder le modèle :"
 
+#: includes/mc-acf-ft-register-cpt.php:11
 #: includes/mc-acf-ft-register-cpt.php:13
 msgid "ACF Templates"
 msgstr "Modèles ACF"
 
+#: includes/mc-acf-ft-register-cpt.php:12
 #: includes/mc-acf-ft-register-cpt.php:14
 #: includes/mc-acf-ft-register-cpt.php:40
 #: includes/mc-acf-ft-register-cpt.php:41
@@ -239,10 +241,15 @@ msgstr ""
 msgid "Filter items list"
 msgstr ""
 
+#: includes/mc-acf-ft-register-cpt.php:73
 #: includes/mc-acf-ft-register-cpt.php:75
 #: includes/mc-acf-ft-register-cpt.php:76
 msgid "Categories"
 msgstr "Catégories"
+
+#: includes/mc-acf-ft-register-cpt.php:74
+msgid "Category"
+msgstr ""
 
 #: includes/mc-acf-ft-register-cpt.php:77
 msgid "Parent Item"

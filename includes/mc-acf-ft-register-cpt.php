@@ -8,8 +8,8 @@ defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 function mc_acf_ft_register_cpt() {
 
     $labels = array(
-        'name'                  => _x( 'ACF Templates', 'Post Type General Name', 'mc-acf-ft-template' ),
-        'singular_name'         => _x( 'ACF Template', 'Post Type Singular Name', 'mc-acf-ft-template' ),
+        'name'                  => __( 'ACF Templates', 'mc-acf-ft-template' ),
+        'singular_name'         => __( 'ACF Template', 'mc-acf-ft-template' ),
         'menu_name'             => __( 'ACF Templates', 'mc-acf-ft-template' ),
         'name_admin_bar'        => __( 'ACF Template', 'mc-acf-ft-template' ),
         'archives'              => __( 'ACF Template Archives', 'mc-acf-ft-template' ),
