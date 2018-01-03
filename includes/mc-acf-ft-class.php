@@ -14,18 +14,51 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             }
         }
         public function mc_ft_add_actions_filters() {
-
+            // save templates data
+            add_action('acf/save_post', array($this, 'mc_ft_acf_update_template'), 1);
+            // add option settings in flexible field
             add_action('acf/render_field_settings/type=flexible_content', array($this, 'mc_ft_acf_field_groups_add_settings'), 10, 1);
-
+            // display plugin import and export on flexible field
             add_filter('acf/get_field_label', array($this, 'mc_ft_add_filter_label'), 999, 2);
             // ajax action for loading values
             add_action('wp_ajax_mc_acf_ft_save_template', array($this, 'mc_acf_ft_save_template'));
             add_action('wp_ajax_mc_acf_import_template', array($this, 'mc_acf_import_template'));
 
+            // render our field for Templates CPT
+            add_action('edit_form_after_title', array($this, 'mc_acf_ft_after_title'), 10, 1);
             // enqueue js extension for acf
             // do this when ACF in enqueuing scripts
             add_action('acf/input/admin_enqueue_scripts', array($this, 'enqueue_script'));
 
+        }
+
+        /*
+        * mc_ft_acf_update_template
+        * hooked on acf/save_post
+        * Update ACF templates data
+        * @param  $post_id INT
+        */
+        public function mc_ft_acf_update_template($post_id) {
+
+            if ( wp_is_post_revision( $post_id ) )
+                return;
+
+            $post_type = get_post_type($post_id);
+
+            if ( 'acf_template' != $post_type && empty($_POST['acf']) ) return;
+
+            $fields = $_POST['acf'];
+
+            if( !empty($fields) && is_array($fields) ) {
+                foreach($fields as $key => $field) {
+                    if( !is_serialized($field) ) {
+                        $field = maybe_serialize( $field );
+                    }
+                    update_post_meta( $post_id, '_flex_layout_data', $field );
+                }
+            }
+            // unset ACF post data because we don't want to add this to post_meta
+            unset($_POST['acf']);
         }
 
         /*
@@ -58,7 +91,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             if( isset($field['type']) 
                 && $field['type'] == 'flexible_content' 
                 && isset($field['mc_acf_ft_true_false']) && $field['mc_acf_ft_true_false']
-                && !in_array($typenow, array('acf-field-group', 'attachment'))
+                && !in_array($typenow, array('acf-field-group', 'attachment', 'acf_template'))
                 && isset($field['key'])
                 && !empty($field['key'])) {
 
@@ -471,6 +504,46 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                     $error['message'] =  __('You can\'t import empty template.', 'mc-acf-ft-template');
                     wp_send_json_error($error);
                     exit;
+                }
+            }
+        }
+
+        /*
+        * mc_acf_ft_after_title
+        * Display our custom flexible fields in acf template CPT
+        * $post : post object
+        */
+        public function mc_acf_ft_after_title($post) {
+            if($post->post_type != 'acf_template') {
+                return;
+            }
+            $flex_layout_id = $post->ID;
+            // the flexible layout meta data saved in the template
+            $layouts_serialized = get_post_meta($flex_layout_id, '_flex_layout_data', true );
+
+            $layouts = maybe_unserialize($layouts_serialized);
+
+            if( is_array($layouts) && !empty($layouts) ) {
+
+                // the original ACF field group from which template was saved
+                $layout_parent_key = get_post_meta($flex_layout_id, '_flex_layout_parent', true );
+
+                // get the original field object 
+                // needed in the render_layout function
+                $parent_object = get_field_object($layout_parent_key, true, true);
+
+                // acf flexible main class
+                if(class_exists('acf_field_flexible_content')) {
+
+                    // we push our saved template values in group parent object
+                    foreach($layouts as $i => $value ) {
+                        $parent_object['value'][] = $value;
+                        // add the name according to the group parent key, used in layout input hidden
+                        // used by ACF in render_layout function
+                        $parent_object['name'] = 'acf['.$layout_parent_key.']';
+                    }
+                    //
+                    acf_render_fields($flex_layout_id, array($parent_object), $el = 'div', $instruction = 'label');
                 }
             }
         }
