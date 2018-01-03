@@ -45,7 +45,13 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
             $post_type = get_post_type($post_id);
 
-            if ( 'acf_template' != $post_type && empty($_POST['acf']) ) return;
+            if ( $post_type != 'acf_template' ) {
+                return;
+            }
+
+            if( empty($_POST['acf']) ) {
+                return;
+            }
 
             $fields = $_POST['acf'];
 
