@@ -103,13 +103,6 @@ function mc_acf_ft_register_tax() {
         'show_in_rest'               => true,
     );
     register_taxonomy( 'acf_template_tax', array( 'acf_template' ), $args );
-
-    // if we have transient, create default term after cpt and tax setup
-    if( get_transient( 'mc-acf-ft-default-term' ) ) {
-        wp_insert_term( 'Default', 'acf_template_tax' );
-        delete_transient( 'mc-acf-ft-default-term' );
-    }
-
 }
 add_action( 'init', 'mc_acf_ft_register_tax', 0 );
 
@@ -137,23 +130,3 @@ function custom_acf_template_column( $column, $post_id ) {
             break;
     }
 }
-
-/*
-* Set default term for CPT 
-* https://gist.github.com/mayeenulislam/f208b4fd408fd4742c06
-*/
-function mc_acf_ft_set_default_object_terms( $post_id, $post ) {
-    if ( 'publish' === $post->post_status && $post->post_type === 'acf_template' ) {
-        $defaults = array(
-            'acf_template_tax' => array( 'default' ),
-        );
-        $taxonomies = get_object_taxonomies( $post->post_type );
-        foreach ( (array) $taxonomies as $taxonomy ) {
-            $terms = wp_get_post_terms( $post_id, $taxonomy );
-            if ( empty( $terms ) && array_key_exists( $taxonomy, $defaults ) ) {
-                wp_set_object_terms( $post_id, $defaults[$taxonomy], $taxonomy );
-            }
-        }
-    }
-}
-add_action( 'save_post', 'mc_acf_ft_set_default_object_terms', 100, 2 );
