@@ -2,6 +2,8 @@
 
 ## Description 
 
+[Article de présentation](https://mariecomet.fr/2018/01/04/gerez-flexibles-acf-librairie-modeles/) 🇫🇷
+[Blog post description](https://mariecomet.fr/2018/01/04/gerez-flexibles-acf-librairie-modeles/#english) 🇬🇧
 This WordPress plugin makes it possible to save the ACF flexible content fields as templates and to use them again.
 This plugin is under development, please do not use it in production site.
 
