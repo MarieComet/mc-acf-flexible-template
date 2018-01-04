@@ -28,6 +28,38 @@ Advanced Custom Fields Pro 5.6 or greater has to be installed and activated.
 * There is two filters you can use for that :
 `mc_ft_import_cap` and `mc_ft_save_cap` which you must pass one or more WordPress capabilities.
 
+### How to customize labels used in admin templates?
+
+* Because Flexible fields can be very different things depending on the projects, you can use 4 filters to customize the labels used in admin, and also textdomain :
+`mc_ft_template_plural`, `mc_ft_template_singular`, `mc_ft_template_all_menu_label` and `mc_ft_template_text_domain`.
+Examples of how to use them :
+```
+// the textdomain
+function my_custom_template_textdomain( $text_domain ) {
+    $text_domain = 'my-textdomain';
+    return $text_domain;
+}
+add_filter( 'mc_ft_template_text_domain', 'my_custom_template_textdomain', 10, 1 );
+// singular label
+function my_custom_template_sing_label( $singular_name ) {
+    $singular_name = 'Custom singular';
+    return $singular_name;
+}
+add_filter( 'mc_ft_template_singular', 'my_custom_template_sing_label', 10, 1 );
+// plural label
+function my_custom_template_plur_label( $plural_name ) {
+    $plural_name = 'Custom plural';
+    return $plural_name;
+}
+add_filter( 'mc_ft_template_plural', 'my_custom_template_plur_label', 10, 1 );
+// the "all" menu label
+function my_custom_template_menu_label( $all_menu_label ) {
+    $all_menu_label = 'Custom "all" menu label';
+    return $all_menu_label;
+}
+add_filter( 'mc_ft_template_all_menu_label', 'my_custom_template_menu_label', 10, 1 );
+```
+
 ## Screenshots
 
 * Flexible field setting

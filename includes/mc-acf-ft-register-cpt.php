@@ -7,15 +7,25 @@ defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 // Register Custom Post Type
 function mc_acf_ft_register_cpt() {
 
+    // Allow to filters the main labels used in admin
+
+    $singular_name = apply_filters( 'mc_ft_template_singular', 'ACF Template' );
+
+    $plural_name = apply_filters( 'mc_ft_template_plural', 'ACF Templates');
+
+    $all_menu_label = apply_filters( 'mc_ft_template_all_menu_label', 'All');
+
+    $text_domain = apply_filters( 'mc_ft_template_text_domain', 'mc-acf-ft-template' );
+
     $labels = array(
-        'name'                  => __( 'ACF Templates', 'mc-acf-ft-template' ),
-        'singular_name'         => __( 'ACF Template', 'mc-acf-ft-template' ),
-        'menu_name'             => __( 'ACF Templates', 'mc-acf-ft-template' ),
-        'name_admin_bar'        => __( 'ACF Template', 'mc-acf-ft-template' ),
+        'name'                  => __( $plural_name, $text_domain ),
+        'singular_name'         => __( $singular_name, $text_domain ),
+        'menu_name'             => __( $plural_name, $text_domain ),
+        'name_admin_bar'        => __( $singular_name, $text_domain ),
         'archives'              => __( 'ACF Template Archives', 'mc-acf-ft-template' ),
         'attributes'            => __( 'ACF Template Attributes', 'mc-acf-ft-template' ),
         'parent_item_colon'     => __( 'Parent Item:', 'mc-acf-ft-template' ),
-        'all_items'             => __( 'All ACF Templates', 'mc-acf-ft-template' ),
+        'all_items'             => __( $all_menu_label, $text_domain ),
         'add_new_item'          => __( 'Add New Item', 'mc-acf-ft-template' ),
         'add_new'               => __( 'Add New', 'mc-acf-ft-template' ),
         'new_item'              => __( 'New Item', 'mc-acf-ft-template' ),

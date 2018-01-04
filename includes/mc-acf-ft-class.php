@@ -539,7 +539,6 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
             if( is_array($layouts) && !empty($layouts) ) {
                 // acf flexible main class
                 if(class_exists('acf_field_flexible_content')) {
-
                     // we push our saved template values in group parent object
                     foreach($layouts as $i => $value ) {
                         $parent_object['value'][] = $value;
@@ -547,10 +546,11 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
                         // used by ACF in render_layout function
                         $parent_object['name'] = 'acf['.$layout_parent_key.']';
                     }
-                    //
+                    // render field with values
                     acf_render_fields($flex_layout_id, array($parent_object), $el = 'div', $instruction = 'label');
                 }
             } else {
+                // render field without value
                 acf_render_fields($flex_layout_id, array($parent_object), $el = 'div', $instruction = 'label');
             }
         }
