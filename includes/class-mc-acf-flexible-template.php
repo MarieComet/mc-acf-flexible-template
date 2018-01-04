@@ -166,7 +166,8 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                     );
                     $acf_templates = get_posts( $args_templates );
 
-                    if( $acf_templates ) : ?>
+                    if( $acf_templates ) :
+                    ?>
                     <label for="acf_templates"><?php _e('Select a template :', 'mc-acf-ft-template'); ?>
                         <select name="acf_templates" class="acf-templates-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Select a template', 'mc-acf-ft-template'); ?>">
                             <option></option>
@@ -175,21 +176,26 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                             $without_terms = array();
                             // if we have terms
                             if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) :
-                                foreach( $templates_tax as $term ) : ?>
+                                foreach( $templates_tax as $term ) :
+                                    ?>
                                     <optgroup label="<?php echo $term->name; ?>">
                                     <?php
                                     foreach( $acf_templates as $acf_template ) : 
                                         if ( has_term('', 'acf_template_tax', $acf_template->ID) ) :
-                                            if ( has_term($term, 'acf_template_tax', $acf_template->ID) ) : ?>
+                                            if ( has_term($term, 'acf_template_tax', $acf_template->ID) ) :
+                                                ?>
                                                 <option value="<?php echo $acf_template->ID; ?>"><?php echo $acf_template->post_title; ?></option>
-                                            <?php endif;
+                                            <?php
+                                            endif;
                                         else :
                                             // store templates without this term here for display later
                                             $without_terms[] = $acf_template->ID;
-                                        endif; ?>
+                                        endif;
+                                        ?>
                                     <?php endforeach; ?>
                                     </optgroup>
-                                <?php endforeach;
+                                <?php
+                                endforeach;
                             // if we don't have terms at all
                             else :
                                 foreach( $acf_templates as $acf_template ) :
@@ -199,7 +205,8 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
                             // if we have templates without terms
                             if( is_array($without_terms) && !empty($without_terms) ) : 
-                                $without_terms = array_unique($without_terms); ?>
+                                $without_terms = array_unique($without_terms);
+                            ?>
                                     <optgroup label="<?php _e('Uncategorised', 'mc-acf-ft-template'); ?>">
                                     <?php foreach( $without_terms as $template ) : ?>
                                         <option value="<?php echo $template; ?>"><?php echo get_the_title($template); ?></option>
@@ -242,7 +249,8 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                     <div class="acf-mc-ft-save-success acf-success-message" style="display:none;"></div>
                     <div class="acf-mc-ft-save-error acf-error-message" style="display:none;"></div>
                     <?php
-                    if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) : ?>
+                    if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) :
+                        ?>
                     <label for="acf_templates_terms"><?php _e('Select one or more categories :', 'mc-acf-ft-template'); ?>
                         <select name="acf_templates_terms" class="acf-templates-terms-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Select', 'mc-acf-ft-template'); ?>" multiple="multiple">
                         <option></option>
