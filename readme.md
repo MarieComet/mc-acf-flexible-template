@@ -69,10 +69,16 @@ add_filter( 'mc_ft_template_all_menu_label', 'my_custom_template_menu_label', 10
 ![Save template](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screenshot-2.png "Save template")
 
 * Import flexible template
-![Import template](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screenshot-3.png "Import template")
+![Import template](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screenshot-3-1.png "Import template")
 
 * Flexible template imported
-![Template imported](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screenshot-4.png "Template imported")
+![Template imported](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screenshot-3-2.png "Template imported")
+
+* Flexibles templates list
+![Flexibles templates list](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screenshot-4.png "Flexibles templates list")
+
+* Edit existing template
+![Edit existing template](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screenshot-5.png "Edit existing template")
 
 ### 2017-12-23 1.0.1
 * Initial Commit
