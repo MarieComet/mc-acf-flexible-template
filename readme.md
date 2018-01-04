@@ -18,7 +18,7 @@ Advanced Custom Fields Pro 5.6 or greater has to be installed and activated.
 * Export and import will be turned on by default for new flexible fields, if you want disable them, go in your flexible field settings.
 * If your flexible field is registered via PHP, you must add `'mc_acf_ft_true_false '=> 1` in the options of this last one (after min, max and button_label options)
 * Export and Import will show on your flexible fields.
-* You can rename / delete your templates in admin > ACF Templates (edit templates on the road...).
+* You can edit your templates in admin > ACF Templates.
 * See screenshots.
 
 ## FAQ
