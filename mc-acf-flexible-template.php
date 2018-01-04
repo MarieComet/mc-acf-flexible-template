@@ -41,7 +41,7 @@ add_action( 'admin_notices', 'mc_acf_ft_missing_notice' );
 function mc_acf_ft_missing_notice(){
  
     /* Check transient, if available display notice */
-    if( get_transient( 'mc-acf-admin-notice' ) && !class_exists('acf') ) {
+    if ( get_transient( 'mc-acf-admin-notice' ) && !class_exists('acf') ) {
         ?>
         <div class="notice notice-error is-dismissible">
             <p><?php _e( 'MC ACF Flexible Template plugin needs "Advanced Custom Fields Pro" to run. Please download and activate it', 'mc-acf-ft-template' ); ?></p>
@@ -51,9 +51,9 @@ function mc_acf_ft_missing_notice(){
         delete_transient( 'mc-acf-admin-notice' );
     }
 }
-add_action('plugins_loaded', 'mc_acf_ft_load');
+add_action( 'plugins_loaded', 'mc_acf_ft_load' );
 function mc_acf_ft_load() {
-    if(class_exists('acf')) {
+    if ( class_exists('acf') ) {
         include_once('includes/mc-acf-ft-register-cpt.php');
         include_once('includes/class-mc-acf-flexible-template.php');
     }

@@ -9,24 +9,24 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
     class MC_Acf_Flexible_Template {
 
         function __construct() {
-            add_action('admin_init', array($this, 'mc_ft_add_actions_filters') );
+            add_action( 'admin_init', array( $this, 'mc_ft_add_actions_filters' ) );
         }
         public function mc_ft_add_actions_filters() {
             // save templates data
-            add_action('acf/save_post', array($this, 'mc_ft_acf_update_template'), 1);
+            add_action( 'acf/save_post', array($this, 'mc_ft_acf_update_template'), 1 );
             // add option settings in flexible field
-            add_action('acf/render_field_settings/type=flexible_content', array($this, 'mc_ft_acf_field_groups_add_settings'), 10, 1);
+            add_action( 'acf/render_field_settings/type=flexible_content', array($this, 'mc_ft_acf_field_groups_add_settings'), 10, 1 );
             // display plugin import and export on flexible field
-            add_filter('acf/get_field_label', array($this, 'mc_ft_add_filter_label'), 999, 2);
+            add_filter( 'acf/get_field_label', array($this, 'mc_ft_add_filter_label'), 999, 2 );
             // ajax action for loading values
-            add_action('wp_ajax_mc_acf_ft_save_template', array($this, 'mc_acf_ft_save_template'));
-            add_action('wp_ajax_mc_acf_import_template', array($this, 'mc_acf_import_template'));
+            add_action( 'wp_ajax_mc_acf_ft_save_template', array($this, 'mc_acf_ft_save_template') );
+            add_action( 'wp_ajax_mc_acf_import_template', array($this, 'mc_acf_import_template') );
 
             // render our field for Templates CPT
-            add_action('edit_form_after_title', array($this, 'mc_acf_ft_after_title'), 10, 1);
+            add_action( 'edit_form_after_title', array($this, 'mc_acf_ft_after_title'), 10, 1 );
             // enqueue js extension for acf
             // do this when ACF in enqueuing scripts
-            add_action('acf/input/admin_enqueue_scripts', array($this, 'enqueue_script'));
+            add_action( 'acf/input/admin_enqueue_scripts', array($this, 'enqueue_script') );
 
         }
 
@@ -37,26 +37,26 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
         * @param  $post_id INT
         * @since 1.0.2
         */
-        public function mc_ft_acf_update_template($post_id) {
+        public function mc_ft_acf_update_template( $post_id ) {
 
             if ( wp_is_post_revision( $post_id ) )
                 return;
 
-            $post_type = get_post_type($post_id);
+            $post_type = get_post_type( $post_id );
 
             if ( $post_type != 'acf_template' ) {
                 return;
             }
 
-            if( empty($_POST['acf']) ) {
+            if ( empty($_POST['acf']) ) {
                 return;
             }
 
             $fields = $_POST['acf'];
 
-            if( !empty($fields) && is_array($fields) ) {
+            if ( !empty($fields) && is_array($fields) ) {
                 foreach($fields as $key => $field) {
-                    if( !is_serialized($field) ) {
+                    if ( !is_serialized($field) ) {
                         $field = maybe_serialize( $field );
                     }
                     update_post_meta( $post_id, '_flex_layout_data', $field );
@@ -73,7 +73,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
         * @param  $field (array)
         * @since 1.0.1
         */
-        public function mc_ft_acf_field_groups_add_settings($field) {
+        public function mc_ft_acf_field_groups_add_settings( $field ) {
             // min
             acf_render_field_setting( $field, array(
                 'label'         => __('Save and load templates functionality','mc-acf-ft-template'),
@@ -92,15 +92,15 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
         *  @return  $label (string)
         * @since 1.0.1
         */
-        public function mc_ft_add_filter_label($label, $field){
+        public function mc_ft_add_filter_label( $label, $field ){
             global $post, $pagenow, $typenow;
 
-            if( isset($field['type']) 
+            if ( isset($field['type'] )
                 && $field['type'] == 'flexible_content' 
-                && isset($field['mc_acf_ft_true_false']) && $field['mc_acf_ft_true_false']
-                && !in_array($typenow, array('acf-field-group', 'attachment', 'acf_template'))
-                && isset($field['key'])
-                && !empty($field['key'])) {
+                && isset( $field['mc_acf_ft_true_false'] ) && $field['mc_acf_ft_true_false']
+                && !in_array( $typenow, array('acf-field-group', 'attachment', 'acf_template') )
+                && isset( $field['key'] )
+                && !empty( $field['key']) ) {
 
                 $label .= '<div class="acf-mc-ft-wrap">';
                 ob_start();
@@ -108,15 +108,15 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                 $import_cap = 'edit_others_pages';
                 $import_cap = apply_filters( 'mc_ft_import_cap', $import_cap );
 
-                if( current_user_can($import_cap) ) {
-                    $label .= $this->mc_ft_select_display($field['key']);
+                if ( current_user_can( $import_cap ) ) {
+                    $label .= $this->mc_ft_select_display( $field['key'] );
                 }
 
                 $save_cap = 'edit_others_pages';
                 $save_cap = apply_filters( 'mc_ft_save_cap', $save_cap );
 
-                if( current_user_can($save_cap) ) {
-                    $label .= $this->mc_ft_save_display($field['key']);
+                if( current_user_can( $save_cap ) ) {
+                    $label .= $this->mc_ft_save_display( $field['key'] );
                 }
                 $label .= ob_get_clean();
                 $label .= '</div>';
@@ -132,7 +132,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
         * $field_key : the current field key group
         * @since 1.0.1
         */
-        public function mc_ft_select_display($field_key){
+        public function mc_ft_select_display( $field_key ){
 
             $templates_tax = get_terms( array(
                 'taxonomy' => 'acf_template_tax',
@@ -166,7 +166,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                     );
                     $acf_templates = get_posts( $args_templates );
 
-                    if( $acf_templates ) :
+                    if ( $acf_templates ) :
                     ?>
                     <label for="acf_templates"><?php _e('Select a template :', 'mc-acf-ft-template'); ?>
                         <select name="acf_templates" class="acf-templates-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Select a template', 'mc-acf-ft-template'); ?>">
@@ -176,13 +176,13 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                             $without_terms = array();
                             // if we have terms
                             if ( ! empty( $templates_tax ) && ! is_wp_error( $templates_tax ) ) :
-                                foreach( $templates_tax as $term ) :
+                                foreach ( $templates_tax as $term ) :
                                     ?>
                                     <optgroup label="<?php echo $term->name; ?>">
                                     <?php
-                                    foreach( $acf_templates as $acf_template ) : 
+                                    foreach ( $acf_templates as $acf_template ) : 
                                         if ( has_term('', 'acf_template_tax', $acf_template->ID) ) :
-                                            if ( has_term($term, 'acf_template_tax', $acf_template->ID) ) :
+                                            if ( has_term( $term, 'acf_template_tax', $acf_template->ID ) ) :
                                                 ?>
                                                 <option value="<?php echo $acf_template->ID; ?>"><?php echo $acf_template->post_title; ?></option>
                                             <?php
@@ -198,17 +198,17 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                                 endforeach;
                             // if we don't have terms at all
                             else :
-                                foreach( $acf_templates as $acf_template ) :
+                                foreach ( $acf_templates as $acf_template ) :
                                     $without_terms[] = $acf_template->ID;
                                 endforeach;
                             endif;
 
                             // if we have templates without terms
-                            if( is_array($without_terms) && !empty($without_terms) ) : 
-                                $without_terms = array_unique($without_terms);
+                            if ( is_array( $without_terms ) && !empty( $without_terms ) ) : 
+                                $without_terms = array_unique( $without_terms );
                             ?>
                                     <optgroup label="<?php _e('Uncategorised', 'mc-acf-ft-template'); ?>">
-                                    <?php foreach( $without_terms as $template ) : ?>
+                                    <?php foreach ( $without_terms as $template ) : ?>
                                         <option value="<?php echo $template; ?>"><?php echo get_the_title($template); ?></option>
                                     <?php endforeach; ?>
                                     </optgroup>
@@ -231,7 +231,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
         * $field_key : the current field key group
         * @since 1.0.1
         */
-        public function mc_ft_save_display($field_key){
+        public function mc_ft_save_display( $field_key ){
             $templates_tax = get_terms( array(
                 'taxonomy' => 'acf_template_tax',
                 'hide_empty' => false,
@@ -254,7 +254,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                     <label for="acf_templates_terms"><?php _e('Select one or more categories :', 'mc-acf-ft-template'); ?>
                         <select name="acf_templates_terms" class="acf-templates-terms-select mc-acf-ft-select2" style="width: 100%" data-placeholder="<?php _e('Select', 'mc-acf-ft-template'); ?>" multiple="multiple">
                         <option></option>
-                        <?php foreach( $templates_tax as $term ) : ?>
+                        <?php foreach ( $templates_tax as $term ) : ?>
                             <option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
                         <?php endforeach; ?>
                         </select>
@@ -292,14 +292,14 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             );
 
             // we can use the acf nonce to verify the request
-            if (!wp_verify_nonce($_POST['nonce'], 'acf_nonce')) {
+            if ( !wp_verify_nonce( $_POST['nonce'], 'acf_nonce' ) ) {
                 $error = -1;
                 wp_send_json_error($error);
                 exit;
             }
 
             // make sure we have ACF data
-            if( !isset( $_POST['acf'] ) || isset( $_POST['acf'] ) && empty($_POST['acf'])) {
+            if ( !isset( $_POST['acf'] ) || isset( $_POST['acf'] ) && empty( $_POST['acf'] ) ) {
                 $error['code'] = 0;
                 $error['message'] =  __('You can\'t save empty template.', 'mc-acf-ft-template');
                 wp_send_json_error($error);
@@ -307,7 +307,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             }
 
             // make sure our template name is set
-            if ( !isset($_POST['mc_acf_template_name']) ) {
+            if ( !isset( $_POST['mc_acf_template_name'] ) ) {
                 $error['code'] = -1;
                 $error['message'] =  __('Template name input not found.', 'mc-acf-ft-template');
                 wp_send_json_error($error);
@@ -330,9 +330,9 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
                 $fields = $_POST['acf'][$parent_key];
 
-                if( !empty($fields) && is_array($fields) ) {
+                if ( !empty( $fields ) && is_array( $fields ) ) {
 
-                    if( !is_serialized($fields) ) {
+                    if ( !is_serialized( $fields ) ) {
                         $fields = maybe_serialize( $fields );
                     }
 
@@ -345,17 +345,17 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                         'post_type' => 'acf_template'
                     );
 
-                    $post_id = wp_insert_post($post_arr);
+                    $post_id = wp_insert_post( $post_arr );
 
-                    if( is_wp_error($post_id) ) { 
+                    if ( is_wp_error( $post_id ) ) { 
                         $error['code'] = -3;
                         $error['message'] =  __('Error creating post.', 'mc-acf-ft-template');
                         wp_send_json_error($error);
                         exit;
                     } else {
 
-                        if( is_string($fields) ) {
-                            $fields =  wp_slash($fields);
+                        if ( is_string( $fields ) ) {
+                            $fields =  wp_slash( $fields );
                         }
 
                         if ( ! add_post_meta( $post_id, '_flex_layout_parent', $parent_key, true ) ) { 
@@ -366,9 +366,9 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                            update_post_meta( $post_id, '_flex_layout_data', $fields );
                         }
 
-                        if( isset($_POST['mc_acf_template_terms']) && !empty($_POST['mc_acf_template_terms']) ) {
+                        if ( isset($_POST['mc_acf_template_terms']) && !empty( $_POST['mc_acf_template_terms'] ) ) {
                             $terms_selected = $_POST['mc_acf_template_terms'];
-                            if( is_array($terms_selected) && !empty($terms_selected) ) {
+                            if( is_array( $terms_selected ) && !empty( $terms_selected ) ) {
                                 wp_set_post_terms( $post_id, $terms_selected, 'acf_template_tax', true );
                             }
                         }
@@ -379,13 +379,13 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                 } else {
                     $error['code'] = -4;
                     $error['message'] =  __('No layouts for this flexible field.', 'mc-acf-ft-template');
-                    wp_send_json_error($error);
+                    wp_send_json_error( $error );
                     exit;
                 }
 
             }
 
-            wp_send_json_success($json);
+            wp_send_json_success( $json );
 
             exit;
 
@@ -415,14 +415,14 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             );
 
             // we can use the acf nonce to verify the request
-            if (!wp_verify_nonce($_POST['nonce'], 'acf_nonce')) {
+            if ( !wp_verify_nonce( $_POST['nonce'], 'acf_nonce' ) ) {
                 $error = -1;
                 wp_send_json_error($error);
                 exit;
             }
 
             // make sure our template name is set
-            if ( !isset($_POST['acf_templates']) ) {
+            if ( !isset( $_POST['acf_templates'] ) ) {
                 $error['code'] = -1;
                 $error['message'] =  __('Import template select not found.', 'mc-acf-ft-template');
                 wp_send_json_error($error);
@@ -430,14 +430,14 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             }
 
             // make sure our template name is set and not empty
-            if( isset( $_POST['acf_templates'] ) && empty( $_POST['acf_templates'] ) ) {
+            if ( isset( $_POST['acf_templates'] ) && empty( $_POST['acf_templates'] ) ) {
                 $error['code'] = -2;
                 $error['message'] =  __('Please select a template.', 'mc-acf-ft-template');
                 wp_send_json_error($error);
                 exit;
             }
 
-            if( isset($_POST['acf_templates']) && !empty($_POST['acf_templates'] ) ) {
+            if ( isset($_POST['acf_templates']) && !empty( $_POST['acf_templates'] ) ) {
 
                 // the CPT (template) selected
                 $flex_layout_id = $_POST['acf_templates'];
@@ -446,21 +446,21 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                 $initial_count = $_POST['number_layout'];
 
                 // the flexible layout meta data saved in the template
-                $layouts_serialized = get_post_meta($flex_layout_id, '_flex_layout_data', true );
+                $layouts_serialized = get_post_meta( $flex_layout_id, '_flex_layout_data', true );
 
-                $layouts = maybe_unserialize($layouts_serialized);
+                $layouts = maybe_unserialize( $layouts_serialized );
 
-                if( is_array($layouts) && !empty($layouts) ) {
+                if ( is_array( $layouts ) && !empty( $layouts ) ) {
 
                     // the original ACF field group from which template was saved
-                    $layout_parent_key = get_post_meta($flex_layout_id, '_flex_layout_parent', true );
+                    $layout_parent_key = get_post_meta( $flex_layout_id, '_flex_layout_parent', true );
 
                     // get the original field object 
                     // needed in the render_layout function
-                    $parent_object = get_field_object($layout_parent_key, true, true);
+                    $parent_object = get_field_object( $layout_parent_key, true, true );
 
                     // acf flexible main class
-                    if(class_exists('acf_field_flexible_content')) {
+                    if ( class_exists('acf_field_flexible_content') ) {
                         $acf_flex_class = new acf_field_flexible_content();
 
                         /*
@@ -472,7 +472,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                         * I prefer rebuild the field object here and put our layouts value in.
                         */
                         // we push our saved template values in group parent object
-                        foreach($layouts as $i => $value ) {
+                        foreach ( $layouts as $i => $value ) {
                             $parent_object['value'][] = $value;
                             // add the name according to the group parent key, used in layout input hidden
                             // used by ACF in render_layout function
@@ -484,16 +484,16 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                         $fake_layouts = array();
 
                         // loop on group parent layouts and push the name, used later by ACF
-                        foreach( $parent_object['layouts'] as $k => $layout ) {
+                        foreach ( $parent_object['layouts'] as $k => $layout ) {
                             $fake_layouts[ $layout['name'] ] = $layout;
                         }
 
                         $item = array();
                         // loop on parent object values, now contain our templates values
 
-                        foreach( $parent_object['value'] as $i => $value ) {
+                        foreach ( $parent_object['value'] as $i => $value ) {
                             // check if layout exist in parent group now
-                            if(array_key_exists($value['acf_fc_layout'], $fake_layouts)) {
+                            if( array_key_exists( $value['acf_fc_layout'], $fake_layouts ) ) {
                                 // unslash values
                                 $value =  wp_unslash($value);
 
@@ -510,19 +510,19 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
                         $json['layouts'] = $item;
                         $json['message'] = __('Template imported, remember to save the post.', 'mc-acf-ft-template');
-                        if(is_array($item)) {
-                            wp_send_json_success($json);
+                        if ( is_array( $item ) ) {
+                            wp_send_json_success( $json );
                         }
                     } else {
                         $error['code'] = -3;
                         $error['message'] =  __('ACF main class not found.', 'mc-acf-ft-template');
-                        wp_send_json_error($error);
+                        wp_send_json_error( $error );
                         exit;
                     }
                 } else {
                     $error['code'] = -4;
                     $error['message'] =  __('You can\'t import empty template.', 'mc-acf-ft-template');
-                    wp_send_json_error($error);
+                    wp_send_json_error( $error );
                     exit;
                 }
             }
@@ -534,39 +534,39 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
         * $post : post object
         * @since 1.0.1
         */
-        public function mc_acf_ft_after_title($post) {
-            if($post->post_type != 'acf_template') {
+        public function mc_acf_ft_after_title( $post ) {
+            if ( $post->post_type != 'acf_template' ) {
                 return;
             }
             $flex_layout_id = $post->ID;
             // the flexible layout meta data saved in the template
-            $layouts_serialized = get_post_meta($flex_layout_id, '_flex_layout_data', true );
+            $layouts_serialized = get_post_meta( $flex_layout_id, '_flex_layout_data', true );
 
             $layouts = maybe_unserialize($layouts_serialized);
 
             // the original ACF field group from which template was saved
-            $layout_parent_key = get_post_meta($flex_layout_id, '_flex_layout_parent', true );
+            $layout_parent_key = get_post_meta( $flex_layout_id, '_flex_layout_parent', true );
 
             // get the original field object 
             // needed in the render_layout function
-            $parent_object = get_field_object($layout_parent_key, true, true);
+            $parent_object = get_field_object( $layout_parent_key, true, true );
 
-            if( is_array($layouts) && !empty($layouts) ) {
+            if ( is_array( $layouts ) && !empty( $layouts ) ) {
                 // acf flexible main class
-                if(class_exists('acf_field_flexible_content')) {
+                if ( class_exists('acf_field_flexible_content') ) {
                     // we push our saved template values in group parent object
-                    foreach($layouts as $i => $value ) {
+                    foreach ( $layouts as $i => $value ) {
                         $parent_object['value'][] = $value;
                         // add the name according to the group parent key, used in layout input hidden
                         // used by ACF in render_layout function
                         $parent_object['name'] = 'acf['.$layout_parent_key.']';
                     }
                     // render field with values
-                    acf_render_fields($flex_layout_id, array($parent_object), $el = 'div', $instruction = 'label');
+                    acf_render_fields( $flex_layout_id, array($parent_object), $el = 'div', $instruction = 'label' );
                 }
             } else {
                 // render field without value
-                acf_render_fields($flex_layout_id, array($parent_object), $el = 'div', $instruction = 'label');
+                acf_render_fields( $flex_layout_id, array($parent_object), $el = 'div', $instruction = 'label' );
             }
         }
 
@@ -575,9 +575,9 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             global $post;
 
             global $post;
-            if (!$post ||
-                !isset($post->ID) || 
-                get_post_type($post->ID) === 'acf-field-group') {
+            if ( !$post ||
+                !isset( $post->ID ) ||
+                get_post_type( $post->ID ) === 'acf-field-group') {
                 return;
             }
 
@@ -596,22 +596,22 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             $localize['ft_label']  = __('Save as template :', 'mc-acf-ft-template');
             //$localized['ft_save']  = __("Save this template", 'mc-acf-ft-template');
 
-            wp_register_script($handle, $src, $depends);
+            wp_register_script( $handle, $src, $depends );
 
-            wp_enqueue_script($handle);
+            wp_enqueue_script( $handle );
 
-            wp_localize_script($handle, 'mc_acf_ft', $localize );
+            wp_localize_script( $handle, 'mc_acf_ft', $localize );
 
             // CSS
-            wp_register_style('mc-acf-ft-css', MC_ACF_FT . 'assets/css/mc-acf-ft-css.css');
-            wp_enqueue_style('mc-acf-ft-css');
+            wp_register_style( 'mc-acf-ft-css', MC_ACF_FT . 'assets/css/mc-acf-ft-css.css' );
+            wp_enqueue_style( 'mc-acf-ft-css' );
         } // end public function enqueue_script
         
     }
 
     global $mc_acf_ft;
     
-    if( !isset($mc_acf_ft) ) {
+    if ( !isset( $mc_acf_ft ) ) {
 
         $mc_acf_ft = new MC_Acf_Flexible_Template();
 

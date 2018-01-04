@@ -124,7 +124,7 @@ add_action( 'init', 'mc_acf_ft_register_tax', 0 );
 add_filter( 'manage_acf_template_posts_columns', 'set_custom_edit_acf_template_columns' );
 add_action( 'manage_acf_template_posts_custom_column' , 'custom_acf_template_column', 10, 2 );
 
-function set_custom_edit_acf_template_columns($columns) {
+function set_custom_edit_acf_template_columns( $columns ) {
     $columns['acf_template_group'] = __( 'Saved from field :', 'mc-acf-ft-template' );
     return $columns;
 }
