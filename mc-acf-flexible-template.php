@@ -55,6 +55,6 @@ add_action('plugins_loaded', 'mc_acf_ft_load');
 function mc_acf_ft_load() {
     if(class_exists('acf')) {
         include_once('includes/mc-acf-ft-register-cpt.php');
-        include_once('includes/mc-acf-ft-class.php');
+        include_once('includes/class-mc-acf-flexible-template.php');
     }
 }
