@@ -37,6 +37,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         * hooked on acf/save_post
         * Update ACF templates data
         * @param  $post_id INT
+        * @since 1.0.2
         */
         public function mc_ft_acf_update_template($post_id) {
 
@@ -72,6 +73,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         * hooked on acf/render_field_settings
         * Add an option to flexible field to turn on/off import and export function by field
         * @param  $field (array)
+        * @since 1.0.1
         */
         public function mc_ft_acf_field_groups_add_settings($field) {
             // min
@@ -90,6 +92,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         *  Display the select box for import and export templates
         *  @param   $field (array)
         *  @return  $label (string)
+        * @since 1.0.1
         */
         public function mc_ft_add_filter_label($label, $field){
             global $post, $pagenow, $typenow;
@@ -129,6 +132,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         * mc_ft_select_display
         * get acf_template CPT list for the current field group 
         * $field_key : the current field key group
+        * @since 1.0.1
         */
         public function mc_ft_select_display($field_key){
 
@@ -220,6 +224,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         * mc_ft_save_display
         * get acf_template CPT list for the current field group 
         * $field_key : the current field key group
+        * @since 1.0.1
         */
         public function mc_ft_save_display($field_key){
             $templates_tax = get_terms( array(
@@ -261,7 +266,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
         /*
         * mc_acf_ft_save_template
-        * Ajax function to import flexible template
+        * Ajax function to save flexible template
+        * @since 1.0.1
         */
         public function mc_acf_ft_save_template() {
 
@@ -381,6 +387,8 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
 
         /*
         * Import template
+        * Ajac function to import flexible template
+        * @since 1.0.1
         */
         public function mc_acf_import_template() {
 
@@ -518,6 +526,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
         * mc_acf_ft_after_title
         * Display our custom flexible fields in acf template CPT
         * $post : post object
+        * @since 1.0.1
         */
         public function mc_acf_ft_after_title($post) {
             if($post->post_type != 'acf_template') {

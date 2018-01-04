@@ -5,7 +5,7 @@
  * Description: This WordPress plugin makes it possible to save the ACF flexible content fields as templates and to use them again. This plugin is under development, please do not use it in production site.
  * Author: Marie Comet
  * Author URI: https://www.mariecomet.fr
- * Version: 1.0.1
+ * Version: 1.0.2
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
@@ -25,7 +25,7 @@ register_activation_hook( __FILE__, 'mc_acf_ft_activation_hook' );
 
 /**
  * Runs only when the plugin is activated.
- * @since 0.1.0
+ * @since 1.0.1
  */
 function mc_acf_ft_activation_hook() {
     /* Create transient data */
@@ -36,7 +36,7 @@ add_action( 'admin_notices', 'mc_acf_ft_missing_notice' );
 
 /**
  * Admin Notice on Activation.
- * @since 0.1.0
+ * @since 1.0.1
  */
 function mc_acf_ft_missing_notice(){
  

@@ -8,14 +8,17 @@ defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 function mc_acf_ft_register_cpt() {
 
     // Allow to filters the main labels used in admin
-
-    $singular_name = apply_filters( 'mc_ft_template_singular', 'ACF Template' );
-
-    $plural_name = apply_filters( 'mc_ft_template_plural', 'ACF Templates');
-
-    $all_menu_label = apply_filters( 'mc_ft_template_all_menu_label', 'All');
-
+    // @since 1.0.2
     $text_domain = apply_filters( 'mc_ft_template_text_domain', 'mc-acf-ft-template' );
+
+    $singular_name = __( 'ACF Template', $text_domain );
+    $singular_name = apply_filters( 'mc_ft_template_singular', $singular_name );
+
+    $plural_name = __( 'ACF Templates', $text_domain );
+    $plural_name = apply_filters( 'mc_ft_template_plural', $plural_name);
+
+    $all_menu_label = __( 'All ACF Templates', $text_domain );
+    $all_menu_label = apply_filters( 'mc_ft_template_all_menu_label', $all_menu_label);
 
     $labels = array(
         'name'                  => __( $plural_name, $text_domain ),
@@ -122,7 +125,6 @@ add_filter( 'manage_acf_template_posts_columns', 'set_custom_edit_acf_template_c
 add_action( 'manage_acf_template_posts_custom_column' , 'custom_acf_template_column', 10, 2 );
 
 function set_custom_edit_acf_template_columns($columns) {
-    //unset( $columns['author'] );
     $columns['acf_template_group'] = __( 'Saved from field :', 'mc-acf-ft-template' );
     return $columns;
 }

@@ -74,7 +74,11 @@ add_filter( 'mc_ft_template_all_menu_label', 'my_custom_template_menu_label', 10
 * Flexible template imported
 ![Template imported](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screenshot-4.png "Template imported")
 
-### 2017-12-23
+### 2017-12-23 1.0.1
 * Initial Commit
+
+### 2018-01-04 1.0.2
+* Add edit templates functionnality
+* Add filters to edit admin labels
 
 
