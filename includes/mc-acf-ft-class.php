@@ -9,9 +9,7 @@ if( !class_exists('MC_Acf_Fexlible_Template') ) {
     class MC_Acf_Fexlible_Template {
 
         function __construct() {
-            if( is_admin() ) {
-                add_action('init', array($this, 'mc_ft_add_actions_filters') );
-            }
+            add_action('admin_init', array($this, 'mc_ft_add_actions_filters') );
         }
         public function mc_ft_add_actions_filters() {
             // save templates data
