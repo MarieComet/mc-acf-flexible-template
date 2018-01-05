@@ -57,9 +57,9 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
             if ( ! empty( $fields ) && is_array( $fields ) ) {
                 foreach ( $fields as $key => $field ) {
-                    // see https://codex.wordpress.org/Function_Reference/maybe_serialize#Notes
-                    if( ! is_serialized( $field ) ) {
-                        $field = maybe_serialize( $field );
+
+                   if ( ! is_serialized($field) ) {
+                       $field = maybe_serialize( $field );
                     }
                     update_post_meta( $post_id, '_flex_layout_data', $field );
                 }
@@ -334,10 +334,16 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
                 if ( ! empty( $fields ) && is_array( $fields ) ) {
 
+<<<<<<< HEAD
                     // see https://codex.wordpress.org/Function_Reference/maybe_serialize#Notes
                     if( ! is_serialized( $fields ) ) {
                         $fields = maybe_serialize( $fields );
                     }
+=======
+                    if ( ! is_serialized($field) ) {
+                        $field = maybe_serialize( $field );		
+                    }		
+>>>>>>> 38266708c460be1ab88117762784737de35e6fb8
 
                     // if we have some flexibles fields, save them in a CPT
                     $post_arr = array(
