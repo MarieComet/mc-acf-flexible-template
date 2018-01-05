@@ -11,24 +11,24 @@ function mc_acf_ft_register_cpt() {
     // @since 1.0.2
     $text_domain = apply_filters( 'mc_ft_template_text_domain', 'mc-acf-ft-template' );
 
-    $singular_name = __( 'ACF Template', $text_domain );
+    $singular_name = __( 'ACF Template', 'mc-acf-ft-template' );
     $singular_name = apply_filters( 'mc_ft_template_singular', $singular_name );
 
-    $plural_name = __( 'ACF Templates', $text_domain );
+    $plural_name = __( 'ACF Templates', 'mc-acf-ft-template' );
     $plural_name = apply_filters( 'mc_ft_template_plural', $plural_name);
 
-    $all_menu_label = __( 'All ACF Templates', $text_domain );
+    $all_menu_label = __( 'All ACF Templates', 'mc-acf-ft-template' );
     $all_menu_label = apply_filters( 'mc_ft_template_all_menu_label', $all_menu_label);
 
     $labels = array(
-        'name'                  => __( $plural_name, $text_domain ),
-        'singular_name'         => __( $singular_name, $text_domain ),
-        'menu_name'             => __( $plural_name, $text_domain ),
-        'name_admin_bar'        => __( $singular_name, $text_domain ),
+        'name'                  => $plural_name,
+        'singular_name'         => $singular_name,
+        'menu_name'             => $plural_name,
+        'name_admin_bar'        => $singular_name,
         'archives'              => __( 'ACF Template Archives', 'mc-acf-ft-template' ),
         'attributes'            => __( 'ACF Template Attributes', 'mc-acf-ft-template' ),
         'parent_item_colon'     => __( 'Parent Item:', 'mc-acf-ft-template' ),
-        'all_items'             => __( $all_menu_label, $text_domain ),
+        'all_items'             => $all_menu_label,
         'add_new_item'          => __( 'Add New Item', 'mc-acf-ft-template' ),
         'add_new'               => __( 'Add New', 'mc-acf-ft-template' ),
         'new_item'              => __( 'New Item', 'mc-acf-ft-template' ),
