@@ -9,8 +9,6 @@ function mc_acf_ft_register_cpt() {
 
     // Allow to filters the main labels used in admin
     // @since 1.0.2
-    $text_domain = apply_filters( 'mc_ft_template_text_domain', 'mc-acf-ft-template' );
-
     $singular_name = __( 'ACF Template', 'mc-acf-ft-template' );
     $singular_name = apply_filters( 'mc_ft_template_singular', $singular_name );
 
