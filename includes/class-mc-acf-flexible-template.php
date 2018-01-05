@@ -57,7 +57,10 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
             if ( ! empty( $field s) && is_array( $fields ) ) {
                 foreach ( $fields as $key => $field ) {
-                    update_post_meta( $post_id, '_flex_layout_data', maybe_serialize( $field ) );
+                   if ( ! is_serialized($field) ) {              
+                       $field = maybe_serialize( $field );		
+                    }
+                    update_post_meta( $post_id, '_flex_layout_data', $field );
                 }
             }
             // unset ACF post data because we don't want to add this to post_meta
@@ -330,7 +333,9 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
                 if ( ! empty( $fields ) && is_array( $fields ) ) {
 
-                    $fields = maybe_serialize( $fields );
+                    if ( ! is_serialized($field) ) {
+                        $field = maybe_serialize( $field );		
+                    }		
 
                     // if we have some flexibles fields, save them in a CPT
                     $post_arr = array(
