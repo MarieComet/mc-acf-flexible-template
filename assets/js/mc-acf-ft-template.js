@@ -97,8 +97,8 @@ jQuery(document).ready(function($){
                             $( parentValues ).append( newItem );
                             // this action set the field and render correctly tabs, etc.
                             acf.do_action( 'append', newItem );
-                            // add -collapsed class, if not all new layouts will be opened
-                            $( newItem ).addClass( '-collapsed just-added bg-green' );
+                            // add -collapsed class, if you want all new layouts opened
+                            $( newItem ).addClass( 'just-added bg-green' );
                             // remove the empty div
                             $( parentFlex ).find( '.no-value-message' ).hide();
                         });
