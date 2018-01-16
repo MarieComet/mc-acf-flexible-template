@@ -336,8 +336,8 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
                 if ( ! empty( $fields ) && is_array( $fields ) ) {
 
-                    if ( ! is_serialized($field) ) {
-                        $field = maybe_serialize( $field );
+                    if ( ! is_serialized( $fields ) ) {
+                        $fields = maybe_serialize( $fields );
                     }
 
                     // if we have some flexibles fields, save them in a CPT
