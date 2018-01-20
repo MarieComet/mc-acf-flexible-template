@@ -330,6 +330,17 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             if ( isset( $_POST['mc_acf_parent_key'] ) && ! empty( $_POST['mc_acf_parent_key'] ) ) {
 
                 $template_name = $_POST['mc_acf_template_name'];
+
+                // check if we have an existing template with that name
+                $maybe_exist_template = get_page_by_title( $template_name, OBJECT, 'acf_template');
+
+                if ( $maybe_exist_template ) {
+                    $error['code'] = 0;
+                    $error['message'] =  __( 'A template already exists with that name. Please enter another name.', 'mc-acf-ft-template' );
+                    wp_send_json_error( $error );
+                    exit;
+                }
+
                 $parent_key = $_POST['mc_acf_parent_key'];
 
                 $fields = $_POST['acf'][$parent_key];
