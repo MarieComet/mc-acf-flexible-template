@@ -27,7 +27,6 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             // enqueue js extension for acf
             // do this when ACF in enqueuing scripts
             add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'enqueue_script' ) );
-
         }
 
         /*
@@ -589,20 +588,15 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
             global $post;
 
-            global $post;
-            if ( ! $post ||
-                ! isset( $post->ID ) ||
+            if ( $post &&
+                isset( $post->ID ) &&
                 get_post_type( $post->ID ) === 'acf-field-group') {
                 return;
             }
 
             // the handle should be changed to your own unique handle
             $handle = 'mc-acf-ft-template-js';
-            
-            // I'm using this method to set the src because
-            // I don't know where this file will be located
-            // you should alter this to use the correct fundtions
-            // to set the src value to point to the javascript file
+
             $src = MC_ACF_FT . '/assets/js/mc-acf-ft-template.js';
             // make this script dependent on acf-input
             $depends = array( 'acf-input' );
