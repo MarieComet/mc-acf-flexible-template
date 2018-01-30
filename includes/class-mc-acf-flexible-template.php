@@ -57,11 +57,16 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
             if ( ! empty( $fields ) && is_array( $fields ) ) {
                 foreach ( $fields as $key => $field ) {
-
-                   if ( ! is_serialized($field) ) {
+                    
+                    // remove this for now, causing infinite slash on escaped chars
+                   /*if ( ! is_serialized( $field ) ) {
                        $field = maybe_serialize( $field );
+                    }*/
 
+                    if ( is_string( $field ) ) {
+                        $field =  wp_slash( $field );
                     }
+
                     update_post_meta( $post_id, '_flex_layout_data', $field );
                 }
             }
