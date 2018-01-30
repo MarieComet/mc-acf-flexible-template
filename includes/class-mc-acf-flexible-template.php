@@ -57,11 +57,10 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
 
             if ( ! empty( $fields ) && is_array( $fields ) ) {
                 foreach ( $fields as $key => $field ) {
-                    
-                    // remove this for now, causing infinite slash on escaped chars
-                   /*if ( ! is_serialized( $field ) ) {
+
+                    if ( ! is_serialized( $field ) ) {
                        $field = maybe_serialize( $field );
-                    }*/
+                    }
 
                     if ( is_string( $field ) ) {
                         $field =  wp_slash( $field );
@@ -575,6 +574,9 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                 if ( class_exists( 'acf_field_flexible_content' ) ) {
                     // we push our saved template values in group parent object
                     foreach ( $layouts as $i => $value ) {
+
+                        // unslash values
+                        $value =  wp_unslash($value);
                         $parent_object['value'][] = $value;
                         // add the name according to the group parent key, used in layout input hidden
                         // used by ACF in render_layout function
