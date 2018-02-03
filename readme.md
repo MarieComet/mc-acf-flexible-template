@@ -25,6 +25,10 @@ Advanced Custom Fields Pro 5.6 or greater has to be installed and activated.
 
 ## FAQ
 
+### Export and import buttons don't show on my flexible field
+
+* Sometime it's necessary to turn on / off option twice.
+
 ### How to define which type of user has access to these features?
 
 * There is two filters you can use for that :
