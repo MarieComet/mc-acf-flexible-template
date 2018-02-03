@@ -53,7 +53,7 @@ function mc_acf_ft_register_cpt() {
         'labels'                => $labels,
         'supports'              => array( 'title', 'custom-fields' ),
         'hierarchical'          => false,
-        'public'                => true,
+        'public'                => false,
         'show_ui'               => true,
         'show_in_menu'          => true,
         'menu_position'         => 80,
@@ -105,7 +105,7 @@ function mc_acf_ft_register_tax() {
     $args = array(
         'labels'                     => $labels,
         'hierarchical'               => true,
-        'public'                     => true,
+        'public'                     => false,
         'show_ui'                    => true,
         'show_admin_column'          => true,
         'show_in_nav_menus'          => false,
@@ -140,3 +140,12 @@ function custom_acf_template_column( $column, $post_id ) {
             break;
     }
 }
+
+function mc_acf_ft_rule_type( $choices ) {
+
+    if ( isset( $choices['acf_template'] ) ) {
+        unset( $choices['acf_template'] );
+    }
+    return $choices;
+}
+add_filter( 'acf/location/rule_values', 'mc_acf_ft_rule_type' );

@@ -66,7 +66,9 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                         $field =  wp_slash( $field );
                     }
 
-                    update_post_meta( $post_id, '_flex_layout_data', $field );
+                    if ( !empty( $field ) ) {
+                        update_post_meta( $post_id, '_flex_layout_data', $field );
+                    }
                 }
             }
             // unset ACF post data because we don't want to add this to post_meta
