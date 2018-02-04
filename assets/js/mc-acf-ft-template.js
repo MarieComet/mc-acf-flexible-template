@@ -48,6 +48,9 @@ jQuery(document).ready(function($){
         _import_template: function( e ) {
             e.preventDefault();
 
+            // acf flexible ref
+            var acfFlexible = acf.fields.flexible_content;
+
             var parentFlex = e.$el.closest( '.acf-field-flexible-content' );
 
             var parentValues = parentFlex.find( '.values' );
@@ -76,6 +79,8 @@ jQuery(document).ready(function($){
             // lock form
             acf.validation.toggle( $form, 'lock' );
 
+            var validLayout = false;
+
             $.post({
                 url: acf.get( 'ajaxurl' ),
                 type: 'post',
@@ -85,23 +90,43 @@ jQuery(document).ready(function($){
                 success: function( json ) {
 
                     if(  true === json.success ) {
-                        
+
                         $( error_div ).hide();
-                        $( succes_div ).text( json.data.message ).show();
+
                         var layoutsHtml =  $( json.data.layouts );
+
                         // loop on layouts
                         $.each( layoutsHtml, function( key, value ) {
-                            // create object for use it later
-                            var newItem = $( value );
-                            // append to parent
-                            $( parentValues ).append( newItem );
-                            // this action set the field and render correctly tabs, etc.
-                            acf.do_action( 'append', newItem );
-                            // add -collapsed class, if you want all new layouts opened
-                            $( newItem ).addClass( 'just-added bg-green' );
-                            // remove the empty div
-                            $( parentFlex ).find( '.no-value-message' ).hide();
+
+                            // bail early if validation fails
+                            if( ! acfFlexible.validate_add() ) {
+
+                                validLayout = false;
+                                return false;
+
+                            } else {
+
+                                // create object for use it later
+                                var newItem = $( value );
+
+                                // append to parent
+                                $( parentValues ).append( newItem );
+                                // this action set the field and render correctly tabs, etc.
+                                acf.do_action( 'append', newItem );
+                                // add -collapsed class, if you want all new layouts opened
+                                $( newItem ).addClass( 'just-added bg-green' );
+                                // remove the empty div
+                                $( parentFlex ).find( '.no-value-message' ).hide();
+
+                                validLayout = true;
+
+                            }
+
                         });
+
+                        if ( validLayout ) {
+                            $( succes_div ).text( json.data.message ).show();
+                        }
 
                         setTimeout(function(){
                             $( succes_div ).text( '' ).hide();
