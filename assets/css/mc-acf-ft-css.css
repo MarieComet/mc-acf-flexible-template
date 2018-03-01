@@ -42,6 +42,7 @@ button.handlediv.acf-mc-ft-close:hover {
     margin-top: 0.5em;
     color: #383838;
     font-weight: normal;
+    background-color: #fff;
 }
 .acf-mc-import-content select.acf-templates-select, .acf-mc-ft-save-wrap select.acf-templates-terms-select {
     min-width: 341px;

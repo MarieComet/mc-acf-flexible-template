@@ -22,7 +22,6 @@ jQuery(document).ready(function($){
             // little fix sometimes select are not initialized
             $( '.mc-acf-ft-select2' ).each( function ( i, obj ) {
                 if ( !$( obj ).hasClass( 'select2-hidden-accessible' ) ) {
-                    console.log('select');
                     $( obj ).select2();
                 }
             });
