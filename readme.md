@@ -89,4 +89,6 @@ add_filter( 'mc_ft_template_all_menu_label', 'my_custom_template_menu_label', 10
 * Add edit templates functionnality
 * Add filters to edit admin labels
 
-
+### 2018-07-14 1.1.0
+* Update for ACF 5.7.0 JS API changes
+* Important : require at LEAST ACF 5.7.0

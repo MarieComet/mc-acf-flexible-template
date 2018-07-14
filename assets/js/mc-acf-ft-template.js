@@ -4,8 +4,8 @@ jQuery(document).ready(function($){
     if (typeof acf == 'undefined') { return; }
 
     $('.mc-acf-ft-select2').select2();
-    
-    var MC_ACF_Flexible_Template = acf.ajax.extend({
+
+    var MC_ACF_Flexible_Template = new acf.Model({
 
         events: {
             'click button.mc-open': '_open_popup',
@@ -14,7 +14,7 @@ jQuery(document).ready(function($){
             'click .acf-mc-ft-save': '_save_template',
         },
 
-        _open_popup: function( e ) {
+        _open_popup: function( e, $el ) {
             
             e.preventDefault();
             e.stopImmediatePropagation();
@@ -29,7 +29,7 @@ jQuery(document).ready(function($){
             // close other popups
             $( '.popup' ).hide();
             // vars
-            var popup = $( e.$el.next( '.popup' ) );
+            var popup = $( $el.next( '.popup' ) );
 
             if ( popup.length ) {
                 $( popup ).show();
@@ -38,14 +38,13 @@ jQuery(document).ready(function($){
             }
         },
 
-        _close_popup: function( e ) {
+        _close_popup: function( e, $el ) {
 
             e.preventDefault();
             e.stopImmediatePropagation();
             // vars
 
-            var popup = $( e.$el.parent( '.popup' ) );
-
+            var popup = $( $el.parent( '.popup' ) );
             if ( popup.length ) {
                 $( popup ).hide();
                 $( popup ).removeClass( '-open' );
@@ -53,13 +52,13 @@ jQuery(document).ready(function($){
             }
         },
         // Import template
-        _import_template: function( e ) {
+        _import_template: function( e, $el ) {
             e.preventDefault();
 
-            // acf flexible ref
-            var acfFlexible = acf.fields.flexible_content;
+            var parentFlex = $el.closest( '.acf-field-flexible-content' );
 
-            var parentFlex = e.$el.closest( '.acf-field-flexible-content' );
+            // acf flexible ref
+            var acfFlexible = acf.getField( parentFlex );
 
             var parentValues = parentFlex.find( '.values' );
 
@@ -85,7 +84,7 @@ jQuery(document).ready(function($){
             acf.validation.busy = 1;
 
             // lock form
-            acf.validation.toggle( $form, 'lock' );
+            acf.validation.lockForm( $form );
 
             var validLayout = false;
 
@@ -107,7 +106,7 @@ jQuery(document).ready(function($){
                         $.each( layoutsHtml, function( key, value ) {
 
                             // bail early if validation fails
-                            if( ! acfFlexible.validate_add() ) {
+                            if( ! acfFlexible.validateAdd() ) {
 
                                 validLayout = false;
                                 return false;
@@ -152,7 +151,7 @@ jQuery(document).ready(function($){
 
                     // unlock so WP can publish form
                     acf.validation.busy = 0;
-                    acf.validation.toggle( $form, 'unlock' );
+                    acf.validation.unlockForm( $form );
                 },
                 error: function( json ) {
                     console.log( json );
@@ -161,10 +160,10 @@ jQuery(document).ready(function($){
         },
 
         // Save template
-        _save_template: function( e ) {
+        _save_template: function( e, $el ) {
             e.preventDefault();
 
-            var parentFlex = e.$el.closest( '.acf-field-flexible-content' );
+            var parentFlex = $el.closest( '.acf-field-flexible-content' );
 
             var parentGroupKey = parentFlex.attr( 'data-key' );
 
@@ -203,7 +202,7 @@ jQuery(document).ready(function($){
             acf.validation.busy = 1;
 
             // lock form
-            acf.validation.toggle( $form, 'lock' );
+            acf.validation.lockForm( $form );
 
             $.post({
                 url: acf.get( 'ajaxurl' ),
@@ -230,7 +229,7 @@ jQuery(document).ready(function($){
                     }
                     // unlock so WP can publish form
                     acf.validation.busy = 0;
-                    acf.validation.toggle( $form, 'unlock' );
+                    acf.validation.unlockForm( $form );
                 },
                 error: function( json ) {
                     console.log('erreur');

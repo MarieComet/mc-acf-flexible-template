@@ -30,6 +30,7 @@ register_activation_hook( __FILE__, 'mc_acf_ft_activation_hook' );
 function mc_acf_ft_activation_hook() {
     /* Create transient data */
     set_transient( 'mc-acf-admin-notice', true, 5 );
+    set_transient( 'mc-acf-version-admin-notice', true, 5 );
 }
 
 add_action( 'admin_notices', 'mc_acf_ft_missing_notice' );
@@ -39,6 +40,12 @@ add_action( 'admin_notices', 'mc_acf_ft_missing_notice' );
  * @since 1.0.1
  */
 function mc_acf_ft_missing_notice(){
+
+    $outdated_version = true;
+
+    if ( defined( 'ACF_VERSION' ) && version_compare( ACF_VERSION, '5.7.0' ) >= 0 ) {
+        $outdated_version = false;
+    }
  
     /* Check transient, if available display notice */
     if ( get_transient( 'mc-acf-admin-notice' ) && ! class_exists('acf') ) {
@@ -49,6 +56,17 @@ function mc_acf_ft_missing_notice(){
         <?php
         /* Delete transient, only display this notice once. */
         delete_transient( 'mc-acf-admin-notice' );
+    }
+
+    if ( get_transient( 'mc-acf-version-admin-notice' ) && class_exists('acf') && $outdated_version ) {
+
+        ?>
+        <div class="notice notice-error is-dismissible">
+            <p><?php _e( 'MC ACF Flexible Template plugin requires at least "Advanced Custom Fields Pro 5.7" to run. Please update ACF.', 'mc-acf-ft-template' ); ?></p>
+        </div>
+        <?php
+        /* Delete transient, only display this notice once. */
+        delete_transient( 'mc-acf-version-admin-notice' );
     }
 }
 add_action( 'plugins_loaded', 'mc_acf_ft_load' );

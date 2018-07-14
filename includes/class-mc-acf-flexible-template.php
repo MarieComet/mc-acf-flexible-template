@@ -154,7 +154,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             <?php _e( 'Load template', 'mc-acf-ft-template' ); ?>
             </button>
             
-            <div class="acf-mc-import-content popup acf-fc-popup">
+            <div class="acf-mc-import-content popup acf-tooltip">
                 <button type="button" class="handlediv acf-mc-ft-close"><span class="dashicons dashicons-no-alt"><span class="screen-reader-text"><?php _e('Close import modal.', 'mc-acf-ft-template'); ?></span></span></button>
                 <div class="acf-mc-ft-save-wrap">
                     <div class="acf-mc-ft-import-success acf-success-message" style="display:none;"></div>
@@ -252,7 +252,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             <?php _e( 'Save template', 'mc-acf-ft-template' ); ?>
             </button>
             
-            <div class="acf-mc-save-content popup acf-fc-popup">
+            <div class="acf-mc-save-content popup acf-tooltip">
             <button type="button" class="handlediv acf-mc-ft-close"><span class="dashicons dashicons-no-alt"><span class="screen-reader-text"><?php _e( 'Close save modal.', 'mc-acf-ft-template' ); ?></span></span></button>
                 <div class="acf-mc-ft-save-wrap">
                     <div class="acf-mc-ft-save-success acf-success-message" style="display:none;"></div>
