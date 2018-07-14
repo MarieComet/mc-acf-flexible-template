@@ -9,16 +9,16 @@ This WordPress plugin makes it possible to save the ACF flexible content fields 
 
 ### Requirements
 
-Advanced Custom Fields Pro 5.6 or greater has to be installed and activated. 
+Advanced Custom Fields Pro 5.7 or greater has to be installed and activated. 
 
 
 ## Installation 
 
 * Download the zip archive and upload it to your WordPress site.
-* Install and activate Advanced Custom Fields Pro 5.6 or greater. 
+* Install and activate Advanced Custom Fields Pro 5.7 or greater. 
 * Activate the plugin.
 * Export and import will be turned on by default for new flexible fields, if you want disable them, go in your flexible field settings.
-* If your flexible field is registered via PHP, you must add `'mc_acf_ft_true_false '=> 1` in the options of this last one (after min, max and button_label options)
+* If your flexible field is registered via PHP, you must add `'mc_acf_ft_true_false'=> 1` in the options of this last one (after min, max and button_label options)
 * Export and Import will show on your flexible fields.
 * You can edit your templates in admin > ACF Templates.
 * See screenshots.
