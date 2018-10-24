@@ -47,6 +47,9 @@ button.handlediv.acf-mc-ft-close:hover {
 .acf-mc-import-content select.acf-templates-select, .acf-mc-ft-save-wrap select.acf-templates-terms-select {
     min-width: 341px;
 }
+.acf-mc-ft-replace-content {
+    margin-bottom: 15px;
+}
 .acf-mc-ft-wrap .acf-success-message {
     border: 2px solid #46b450;
     border-radius: 3px;
