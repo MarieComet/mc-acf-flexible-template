@@ -98,6 +98,17 @@ jQuery(document).ready(function($){
 
                     if(  true === json.success ) {
 
+                        var $replace = $el.closest('.acf-mc-import-content').find('input[name=replace_content]');
+					
+						if( $replace.is(':checked') ) {
+							
+							var $layouts = parentValues.find( '.layout' );
+								$layouts.each( function( key, value ) {
+									acfFlexible.removeLayout( $(value) );
+								});
+						
+						}
+                        
                         $( error_div ).hide();
 
                         var layoutsHtml =  $( json.data.layouts );
