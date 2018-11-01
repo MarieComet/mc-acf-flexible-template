@@ -82,8 +82,7 @@ add_filter( 'mc_ft_template_all_menu_label', 'my_custom_template_menu_label', 10
 * Edit existing template
 ![Edit existing template](https://github.com/MarieComet/MC-ACF-Flexible-Template/blob/master/screenshots/screenshot-5.png "Edit existing template")
 
-### Todo
-* Review save and import process using ACF v5.7 JS API
+### History
 
 ### 2017-12-23 1.0.1
 * Initial Commit
@@ -95,3 +94,6 @@ add_filter( 'mc_ft_template_all_menu_label', 'my_custom_template_menu_label', 10
 ### 2018-07-14 1.1.0
 * Update for ACF 5.7.0 JS API changes
 * Important : require at LEAST ACF 5.7.0
+
+### 2018-11-01
+* Add new feature "replace existing content" before import. Thanks @virgo79 !
