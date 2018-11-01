@@ -62,7 +62,11 @@ jQuery(document).ready(function($){
 
             var parentValues = parentFlex.find( '.values' );
 
-            var numberLayouts = parentValues.find( '.layout' ).length;
+            var layouts = parentValues.find( '.layout' );
+
+            var replaceCheckbox = parentFlex.find('input[name=replace_content]');
+
+            var numberLayouts = layouts.length;
 
             var error_div = parentFlex.find( '.acf-mc-ft-import-error' );
             var succes_div = parentFlex.find( '.acf-mc-ft-import-success' );
@@ -98,17 +102,15 @@ jQuery(document).ready(function($){
 
                     if(  true === json.success ) {
 
-			var $replace = $el.closest('.acf-mc-import-content').find('input[name=replace_content]');
-			if( $replace.is(':checked') ) {
-
-				var $layouts = parentValues.find( '.layout' );
-				$layouts.each( function( key, value ) {
-					acfFlexible.removeLayout( $(value) );
-				});
-
-			}
-                        
                         $( error_div ).hide();
+
+            			if( replaceCheckbox.is(':checked') ) {
+
+            				layouts.each( function( key, value ) {
+            					acfFlexible.removeLayout( $(value) );
+            				});
+
+            			}
 
                         var layoutsHtml =  $( json.data.layouts );
 
