@@ -1,6 +1,6 @@
 <?php
 /*
-* Register CPT 
+* Register CPT
 */
 defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 
@@ -13,10 +13,10 @@ function mc_acf_ft_register_cpt() {
     $singular_name = apply_filters( 'mc_ft_template_singular', $singular_name );
 
     $plural_name = __( 'ACF Templates', 'mc-acf-ft-template' );
-    $plural_name = apply_filters( 'mc_ft_template_plural', $plural_name);
+    $plural_name = apply_filters( 'mc_ft_template_plural', $plural_name );
 
     $all_menu_label = __( 'All ACF Templates', 'mc-acf-ft-template' );
-    $all_menu_label = apply_filters( 'mc_ft_template_all_menu_label', $all_menu_label);
+    $all_menu_label = apply_filters( 'mc_ft_template_all_menu_label', $all_menu_label );
 
     $labels = array(
         'name'                  => $plural_name,
@@ -79,6 +79,11 @@ add_action( 'init', 'mc_acf_ft_register_cpt', 0 );
 
 // Register Custom Taxonomy
 function mc_acf_ft_register_tax() {
+
+    // bail if mc_ft_register_taxonomies returns false
+    if ( ! apply_filters( 'mc_ft_register_taxonomies', '__return_true' ) ) {
+        return false;
+    }
 
     $labels = array(
         'name'                       => _x( 'Categories', 'Taxonomy General Name', 'mc-acf-ft-template' ),
