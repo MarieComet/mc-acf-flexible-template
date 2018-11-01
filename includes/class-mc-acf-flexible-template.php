@@ -224,6 +224,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                             <?php endif; ?>
                         </select>
                     </label>
+                    <label class="acf-mc-ft-replace-content"><input name="replace_content" value="" type="checkbox"><?php _e( 'Replace existing content', 'mc-acf-ft-template' ); ?></label>
                     <button class="acf-mc-ft-import acf-button button button-secondary"><?php _e( 'Load', 'mc-acf-ft-template' ); ?></button>
                     <?php else: ?>
                         <p><?php _e( 'No template found for this flexible', 'mc-acf-ft-template' ); ?></p>
