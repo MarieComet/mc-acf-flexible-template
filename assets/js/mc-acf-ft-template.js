@@ -192,7 +192,7 @@ jQuery(document).ready(function($){
             
             $form = $( 'form#post' );
 
-            acf.do_action( 'validation_begin' );
+            acf.doAction('validation_begin', $form);
 
             var data = acf.serialize( parentValues );
             
