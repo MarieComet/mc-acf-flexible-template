@@ -1,9 +1,9 @@
 {
-    "name"        : "mariecomet/mc-acf-flexible-template"
+    "name"        : "mariecomet/mc-acf-flexible-template",
     "description" : "Makes it possible to save the ACF flexible content fields as templates and to use them again.",
     "keywords"    : ["wordpress"],
     "homepage"    : "https://github.com/MarieComet/mc-acf-flexible-template",
-    "license"     : "GPL-2.0+",
+    "license"     : "GPL-2.0-or-later",
     "type"        : "wordpress-plugin",
     "authors"     : [
 	{
