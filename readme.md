@@ -97,3 +97,6 @@ add_filter( 'mc_ft_template_all_menu_label', 'my_custom_template_menu_label', 10
 
 ### 2018-11-01
 * Add new feature "replace existing content" before import. Thanks @virgo79 !
+
+### March 13 2020
+* Tested with WordPress 5.3.2 and ACF Pro 5.8.7.
