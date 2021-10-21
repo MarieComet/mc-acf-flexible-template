@@ -5,7 +5,7 @@
  * Description: This WordPress plugin makes it possible to save the ACF flexible content fields as templates and to use them again
  * Author: Marie Comet
  * Author URI: https://www.mariecomet.fr
- * Version: 1.1.0
+ * Version: 1.1.1
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *

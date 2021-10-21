@@ -12,6 +12,7 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             add_action( 'admin_init', array( $this, 'mc_ft_add_actions_filters' ) );
         }
         public function mc_ft_add_actions_filters() {
+            add_filter( 'wp_kses_allowed_html', array( $this, 'mc_ft_acf_kses_allowed_html' ), 0, 2 );
             // save templates data
             add_action( 'acf/save_post', array( $this, 'mc_ft_acf_update_template' ), 1 );
             // add option settings in flexible field
@@ -27,6 +28,36 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
             // enqueue js extension for acf
             // do this when ACF in enqueuing scripts
             add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'enqueue_script' ) );
+        }
+
+        /**
+        * mc_ft_acf_kses_allowed_html
+        * hooked on wp_kses_allowed_html
+        * Allow input, select and option html tags in ACF acf/get_field_label
+        * See https://github.com/MarieComet/mc-acf-flexible-template/issues/23
+        * @param  $tags array of allowed tags
+        * @param  $context string ACF context
+        * @since 1.1.1
+        */
+        public function mc_ft_acf_kses_allowed_html( $tags, $context ) {
+            if ( $context === 'acf' ) {
+                $tags[ 'input' ] = [
+                    'type'  => true,
+                    'class' => true,
+                    'value' => true,
+                    'name'  => true,
+                ];
+                $tags[ 'select' ] = [
+                    'style'  => true,
+                    'class' => true,
+                    'data-placeholder' => true,
+                    'name'  => true,
+                ];
+                $tags[ 'option' ] = [
+                    'value'  => true,
+                ];
+            }
+            return $tags;
         }
 
         /*
@@ -271,8 +302,8 @@ if( !class_exists('MC_Acf_Flexible_Template') ) {
                     </label>
                     <?php endif; ?>
                     <label for="mc_acf_template_name"><?php _e( 'Name the template :', 'mc-acf-ft-template' ); ?>
-                    <span class="acf-required">*</span>
-                    <input type="text" class="acf-mc-ft-template-name" value="" name="mc_acf_template_name">
+                        <span class="acf-required">*</span>
+                        <input type="text" class="acf-mc-ft-template-name" value="" name="mc_acf_template_name">
                     </label>
                     <button class="acf-mc-ft-save acf-button button button-secondary"><?php _e( 'Save', 'mc-acf-ft-template' ); ?></button>
                 </div>

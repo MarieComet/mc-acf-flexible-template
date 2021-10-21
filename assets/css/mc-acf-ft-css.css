@@ -51,6 +51,7 @@ button.handlediv.acf-mc-ft-close:hover {
     margin-bottom: 15px;
 }
 .acf-mc-ft-wrap .acf-success-message {
+    display: none;
     border: 2px solid #46b450;
     border-radius: 3px;
     padding: 4px 7px;

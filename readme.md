@@ -100,3 +100,6 @@ add_filter( 'mc_ft_template_all_menu_label', 'my_custom_template_menu_label', 10
 
 ### March 13 2020
 * Tested with WordPress 5.3.2 and ACF Pro 5.8.7.
+
+### October 21 2021 1.1.1
+* Allow html tags in acf field label (https://github.com/MarieComet/mc-acf-flexible-template/issues/23)
